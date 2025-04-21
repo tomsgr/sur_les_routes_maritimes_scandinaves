@@ -1,0 +1,20 @@
+[
+    {
+        "lat": 54.491111,
+        "lon": 9.565278,
+        "lieu": "Heiðabæjar",
+        "type": "city"
+    },
+    {
+        "lat": 54.266667,
+        "lon": 19.263611,
+        "lieu": "Truso",
+        "type": "city"
+    },
+    {
+        "lat": 51.058634,
+        "lon": -1.309806,
+        "lieu": "Wessex",
+        "type": "country"
+    }
+]

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="utf-8" />
+  <title>Itinéraires norrois au IXe/Xe siècle</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <link rel="icon" type="image/png" href="icone2.png">
+  <style>
+    #map {
+      height: 100vh;
+      width: 100%;
+    }
+
+    #toggleLegendBtn {
+      position: absolute;
+      bottom: 10px;
+      right: 10px;
+      z-index: 1001;
+      padding: 6px 10px;
+      background: #fff;
+      border: 1px solid #ccc;
+      font-size: 12px;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    #legend-container {
+      position: absolute;
+      bottom: 50px;
+      right: 10px;
+      background: rgba(255, 255, 255, 0.9);
+      padding: 8px 10px;
+      font-family: sans-serif;
+      font-size: 12px;
+      border-radius: 6px;
+      box-shadow: 0 1px 5px rgba(0, 0, 0, 0.3);
+      z-index: 1000;
+      line-height: 1.4;
+      display: block;
+    }
+
+    .legend-color {
+      display: inline-block;
+      width: 12px;
+      height: 12px;
+      margin-right: 5px;
+      border-radius: 2px;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="map-container">
+    <div id="map"></div>
+
+
+    <!-- Bouton pour afficher/masquer la légende -->
+    <button id="toggleLegendBtn">☰ Afficher/Masquer Légende</button>
+
+    <!-- Conteneur de la légende -->
+    <div id="legend-container">
+      <label><input type="checkbox" id="toggleRouteEnsemble"></span>
+        Ensemble des lieux cités <br> dans les sources norroises</label><br>
+      <label><input type="checkbox" id="toggleRouteCommerce"></span>
+        Ensemble des lieux de commerce importants</label><br>
+        <br>
+      <label><input type="checkbox" id="toggleRouteNaddodr" checked> <span style="background:rgb(65, 65, 156);"
+          class="legend-color"></span> Naddódr "le Clou"</label><br>
+      <label><input type="checkbox" id="toggleRouteGardharr"> <span style="background:rgb(240, 109, 109);" class="legend-color"></span>
+        Garðarr Svavarson</label><br>
+      <label><input type="checkbox" id="toggleRouteFloki"> <span style="background:green;" class="legend-color"></span>
+        Flóki "aux Corbeaux"</label><br>
+      <label><input type="checkbox" id="toggleRouteHjorleifr"> <span style="background:rgb(238, 222, 79);"
+          class="legend-color"></span> Hjorleifr</label><br>
+      <label><input type="checkbox" id="toggleRouteIngolfur"> <span style="background:orange;"
+          class="legend-color"></span> Ingólfur Arnarson</label><br>
+      <label><input type="checkbox" id="toggleRouteOrlygur"> <span style="background:pink;" class="legend-color"></span>
+        Ørlyggr</label><br>
+      <label><input type="checkbox" id="toggleRouteKollr"> <span style="background:purple;" class="legend-color"></span>
+        Kollr</label><br>
+      <label><input type="checkbox" id="toggleRouteWulfstan"> <span style="background:brown;"
+          class="legend-color"></span>Wulfstan</label><br>
+      <label><input type="checkbox" id="toggleRouteOhthere"> <span style="background:beige;" class="legend-color"></span>
+        Óttarr (Ohthere)</label><br>
+      <label><input type="checkbox" id="toggleRouteHrut"><span style="background:black;"
+          class="legend-color"></span>Hrut Herjólfsson</label><br>
+      <label><input type="checkbox" id="toggleRouteGunnar"><span style="background:grey;"
+          class="legend-color"></span>Gunnar Hamundarson</label>
+      <hr>
+      <button id="toggleAll" style="
+        font-size: 11px;
+        padding: 4px 6px;
+        border: none;
+        background: #eee;
+        border-radius: 4px;
+        cursor: pointer;
+        width: 100%;
+      ">Tout désélectionner</button>
+    </div>
+
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script src="leaflet.polylineDecorator.js"></script>
+    <script src="map.js"></script>
+    <script>
+      document.getElementById('toggleLegendBtn').addEventListener('click', () => {
+        const legend = document.getElementById('legend-container');
+        legend.style.display = legend.style.display === 'none' ? 'block' : 'none';
+      });
+    </script>
+  </div>
+</body>
+
+</html>

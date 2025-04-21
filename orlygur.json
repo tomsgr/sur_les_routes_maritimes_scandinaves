@@ -1,0 +1,26 @@
+[
+    {
+        "lat": 58.096252,
+        "lon": -6.893921,
+        "lieu": "Suðureyjar",
+        "type": "island"
+    },
+    {
+        "lat": 65.595046,
+        "lon": -24.065145,
+        "lieu": "Patreksfjörður",
+        "type": "fjord"
+    },
+    {
+        "lat": 64.242635,
+        "lon": -21.822147,
+        "lieu": "Kjalarnes",
+        "type": "peninsula"   
+    },
+    {
+        "lat": 64.218422,
+        "lon": -21.774091,
+        "lieu": "Esjuberg",
+        "type": "farm"
+    }
+]

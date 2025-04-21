@@ -1,0 +1,33 @@
+[
+  {
+    "lieu": "Sjóland",
+    "lat": 55.553269,
+    "lon": 11.716481,
+    "type": "region"
+  },
+  {
+    "lieu": "Horn",
+    "lat": 64.282173,
+    "lon": -14.89939,
+    "type": "peninsula"
+  },
+  {
+    "lieu": "Húsavík",
+    "lat": 66.047006,
+    "lon": -17.349572,
+    "type": "bay"
+  },
+  {
+    "lieu": "Norway",
+    "lat": 60.8877000420779,
+    "lon": 8.701171875,
+    "type": "country"
+  },
+  {
+    "lat": 59.527727,
+    "lon": 5.224923,
+    "lieu": "Flókavarði",
+    "date": "865-01-01",
+    "type": "other"
+  }
+]

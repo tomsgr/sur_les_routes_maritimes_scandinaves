@@ -1,0 +1,14 @@
+[
+    {
+        "lat": 58.096252,
+        "lon": -6.893921,
+        "lieu": "Suðureyjar",
+        "type": "island"
+    },  
+    {
+        "lat": 65.621064,
+        "lon": -24.330621,
+        "lieu": "Kollsvík",
+        "type": "bay"
+    }  
+]

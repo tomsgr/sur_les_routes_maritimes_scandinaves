@@ -1,0 +1,58 @@
+[
+    {
+      "lat": 60.8877000420779,
+      "lon": 8.701171875,
+      "lieu": "Norway"
+    },
+    {
+      "lat": 59.527727,
+      "lon": 5.224923,
+      "lieu": "Flókavarði",
+      "date": "865-01-01",
+      "type": "other"
+    },
+    {
+      "lat": 64.566843,
+      "lon": -14.458881,
+      "lieu": "Álftafjörður",
+      "type": "fjord"
+    },
+    {
+      "lat": 60.8877000420779,
+      "lon": 8.701171875,
+      "lieu": "Norway",
+      "type": "country"
+    },
+    {
+      "lat": 63.800279,
+      "lon": -16.638543,
+      "lieu": "Ingólfshöfði",
+      "type": "other"
+    },
+    {
+      "lat": 63.4304,
+      "lon": -18.762323,
+      "date": "874-01-01",
+      "lieu": "Hjörleifshöfði",
+      "type": "cliff"
+    },
+    {
+        "lat": 63.436724,
+        "lon": -20.277591,
+        "date": "873-01-01",
+        "lieu": "Vestmannaeyjar",
+        "type": "island"
+    },
+    {
+        "lat":63.963039,
+        "lon":-21.002681,
+        "lieu": "Ingólfsfell",
+        "type": "farm"
+    },
+    {
+        "lat":64.146302,
+        "lon":-21.931035,
+        "lieu": "Reykjarvík",
+        "type": "bay"
+    }
+  ]

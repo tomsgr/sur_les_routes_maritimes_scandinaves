@@ -1,0 +1,68 @@
+[
+  {
+    "lieu": "Heiðabæjar",
+    "lat": 54.491111,
+    "lon": 9.565278,
+    "Importance": 5
+  },
+  {
+    "lieu": "Birka",
+    "lat": 59.334,
+    "lon": 18.053,
+    "Importance": 5
+  },
+  {
+    "lieu": "Kaupang",
+    "lat": 58.994,
+    "lon": 10.04,
+    "Importance": 4
+  },
+  {
+    "lieu": "Dublin",
+    "lat": 53.349658,
+    "lon": -6.264252,
+    "Importance": 5
+  },
+  {
+    "lieu": "Novgorod",
+    "lat": 58.522,
+    "lon": 31.27,
+    "Importance": 5
+  },
+  {
+    "lieu": "York",
+    "lat": 53.96,
+    "lon": -1.08,
+    "Importance": 4
+  },
+  {
+    "lieu": "Ribe",
+    "lat": 55.328,
+    "lon": 8.763,
+    "Importance": 4
+  },
+  {
+    "lieu": "Pskov",
+    "lat": 57.819,
+    "lon": 28.335,
+    "Importance": 3
+  },
+  {
+    "lieu": "Limerick",
+    "lat": 52.66503,
+    "lon": -8.624305,
+    "Importance": 4
+  },
+  {
+    "lieu": "Paviken",
+    "lat": 57.48,
+    "lon": 18.583,
+    "Importance": 4
+  },
+  {
+    "lieu": "Helsingborg",
+    "lat": 56.046,
+    "lon": 12.694,
+    "Importance": 3
+  }
+]

@@ -1,0 +1,32 @@
+[
+    {
+        "lat": 69.390636,
+        "lon": 18.505378,
+        "lieu": "Malangen",
+        "type": "farm"
+    },
+    {
+        "lat": 66.606744,
+        "lon": 33.677689,
+        "lieu": "Kandalakcha",
+        "type": "bay"
+    },
+    {
+        "lat": 59.467408,
+        "lon": 10.535431,
+        "lieu": "Óslóarfjörð",
+        "type": "fjord"
+    },
+    {
+        "lat": 54.491111,
+        "lon": 9.565278,
+        "lieu": "Heiðabæjar",
+        "type": "city"
+    },
+    {
+        "lat": 51.058634,
+        "lon": -1.309806,
+        "lieu": "Wessex",
+        "type": "country"
+    }
+]

@@ -1,0 +1,50 @@
+[
+  {
+    "lat": 60.8877000420779,
+    "lon": 8.701171875,
+    "lieu": "Norway"
+  },
+  {
+    "lat": 59.527727,
+    "lon": 5.224923,
+    "lieu": "Flókavarði",
+    "date": "865-01-01",
+    "type": "other"
+  },
+  {
+    "lat": 64.566843,
+    "lon": -14.458881,
+    "lieu": "Álftafjörður",
+    "type": "fjord"
+  },
+  {
+    "lat": 60.8877000420779,
+    "lon": 8.701171875,
+    "lieu": "Norway"
+  },
+  {
+    "lat": 53.142131,
+    "lon": -7.691925,
+    "lieu": "Írland",
+    "type": "country"
+  },
+  {
+    "lat": 53.349658,
+    "lon": -6.264252,
+    "lieu": "Dublin",
+    "type": "city"
+  },
+  {
+    "lat": 60.8877000420779,
+    "lon": 8.701171875,
+    "date": "873-01-01",
+    "lieu": "Norway"
+  },
+  {
+    "lat": 63.4304,
+    "lon": -18.762323,
+    "date": "874-01-01",
+    "lieu": "Hjörleifshöfði",
+    "type": "cliff"
+  }
+]

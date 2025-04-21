@@ -1,0 +1,50 @@
+[
+  {
+    "lat": 59.527727,
+    "lon": 5.224923,
+    "lieu": "Flókavarði",
+    "date": "865-01-01",
+    "type": "other"
+  },
+  {
+    "lat": 60.565962,
+    "lon": -1.380122,
+    "lieu": "Hjaltland",
+    "date": "865-01-01",
+    "type": "region"
+  },
+  {
+    "lieu": "Færeyjar",
+    "lat": 62.007451,
+    "lon": -6.778993,
+    "type": "island"
+  },
+  {
+    "lat": 64.282173,
+    "lon": -14.89939,
+    "lieu": "Horn",
+    "date": "865-01-01",
+    "type": "peninsula"
+  },
+  {
+    "lat": 64.851271791659,
+    "lon": -23.5491943359375,
+    "lieu": "Snæfellsnes",
+    "date": "865-01-01",
+    "type": "region"
+  },
+  {
+    "lat": 65.557312,
+    "lon": -23.163289,
+    "lieu": "Vatnsfjörður",
+    "date": "866-01-01",
+    "type": "fjord"
+  },
+  {
+    "lat": 60.8877000420779,
+    "lon": 8.701171875,
+    "lieu": "Norway",
+    "date": "866-01-01",
+    "type": "country"
+  }
+]
