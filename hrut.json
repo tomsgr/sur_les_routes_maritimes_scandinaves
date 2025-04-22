@@ -1,0 +1,155 @@
+[
+  {
+    "name":"Hrut",
+    "lat":65.0694666667,
+    "lon":-21.7748333333,
+    "date":"960",
+    "lieu":"Hrútsstaðir",
+    "description":"Hruts' house",
+    "Type": "farm"
+  },
+  {
+    "name":"Hrut",
+    "lat":64.25977,
+    "lon":-21.1227,
+    "date":"960",
+    "lieu":"Þingvellir",
+    "description":"lieu du thing",
+    "Type": "assembly site"
+  },
+  {
+    "name":"Hrut",
+    "lat":64.64455,
+    "lon":-21.561,
+    "date":"960-01-01",
+    "lieu":"Hvítá",
+    "description":"NaN",
+    "Type": "river"
+  },
+  {
+    "name":"Hrut",
+    "lat":63.83675,
+    "lon":-20.25455,
+    "date":"960-01-01",
+    "lieu":"Rangárvellir",
+    "description":"NaN",
+    "Type": "region"
+  },
+  {
+    "name":"Hrut",
+    "lat":64.64455,
+    "lon":-21.561,
+    "date":"960-01-01",
+    "lieu":"Hvítá",
+    "description":"Arrivée : va à son bateau",
+    "Type": "river"
+  },
+  {
+    "name":"Hrut",
+    "lat":60.68749,
+    "lon":4.759347,
+    "date":"960-01-01",
+    "lieu":"Hernar",
+    "description":"Arrivée : part pour résoudre un conflit",
+    "Type": "island"
+  },
+  {
+    "name":"Hrut",
+    "lat":59.467408,
+    "lon":10.535431,
+    "date":"960-01-01",
+    "lieu":"Víkin í Noregi",
+    "description":"Arrivée : part pour résoudre un conflit",
+    "Type": "bay"
+  },
+  {
+    "name":"Hrut",
+    "lat":57.869485,
+    "lon":11.882742,
+    "date":"960-01-01",
+    "lieu":"Konungahella",
+    "description":"Arrivée : va à la rencontre de gens importants",
+    "Type": "trading site"
+  },
+  {
+    "name":"Hrut",
+    "lat":55.615605,
+    "lon":12.863656,
+    "date":"961-01-01",
+    "lieu":"Eyrasund",
+    "description":"Arrivée : part pour résoudre un conflit",
+    "Type": "other"
+  },
+  {
+    "name":"Hrut",
+    "lat":57.869485,
+    "lon":11.882742,
+    "date":"961-01-01",
+    "lieu":"Konungahella",
+    "description":"Arrivée : va voir un proche",
+    "Type": "trading site"
+  },
+  {
+    "name":"Hrut",
+    "lat":64.441961,
+    "lon":-22.083246,
+    "date":"962-01-01",
+    "lieu":"Borgarfjörður",
+    "description":"Arrivée : rentre chez lui",
+    "Type": "fjord"
+  },
+  {
+    "name":"Hrut",
+    "lat":65.0694666667,
+    "lon":-21.7748333333,
+    "date":"962-01-01",
+    "lieu":"Hrútsstaðir",
+    "description":"Arrivée : rentre chez lui",
+    "Type": "farm"
+  },
+  {
+    "name":"Hrut",
+    "lat":65.11143,
+    "lon":-21.69485,
+    "date":"962-01-01",
+    "lieu":"Höskuldsstaðir in Laxárdalur",
+    "description":"Arrivée : va voir un proche",
+    "Type": "farm"
+  },
+  {
+    "name":"Hrut",
+    "lat":65.0694666667,
+    "lon":-21.7748333333,
+    "date":"962-01-01",
+    "lieu":"Hrútsstaðir",
+    "description":"Arrivée : rentre chez lui",
+    "Type": "farm"
+  },
+  {
+    "name":"Hrut",
+    "lat":63.83675,
+    "lon":-20.25455,
+    "date":"963-01-01",
+    "lieu":"Rangárvellir",
+    "description":"Arrivée : va se marier ",
+    "Type": "region"
+  },
+  {
+    "name":"Hrut",
+    "lat":65.0694666667,
+    "lon":-21.7748333333,
+    "date":"963-01-01",
+    "lieu":"Hrútsstaðir",
+    "description":"Arrivée : rentre chez lui",
+    "Type": "farm"
+  },
+  {
+    "name":"Hrut",
+    "lat":64.25977,
+    "lon":-21.1227,
+    "date":"963-01-01",
+    "lieu":"Þingvellir",
+    "description":"Arrivée : se rend à l'althing",
+    "Type": "assembly site"
+  }
+]
