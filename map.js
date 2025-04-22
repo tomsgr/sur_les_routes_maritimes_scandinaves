@@ -622,6 +622,26 @@ function openPanel() {
       addDirectionalArrows(polyline_wulfstan, 'brown', routeWulfstanLayer, "Wulfstan", "voyage vers 875");
     });
   });
+
+  // Trajet Hrut
+  fetch('trajet_hrut.geojson')
+  .then(res => res.json())
+  .then(data => {
+    const geoLayer = L.geoJSON(data, {
+      style: {
+        color: 'black',
+        weight: 4,
+        dashArray: '12 8'
+      }
+    }).addTo(routeHrutLayer);
+
+    // 🔽 Pour chaque feature (trajet), créer une polyline avec flèches
+    data.features.forEach(feature => {
+      const coords_hrut = feature.geometry.coordinates.map(coord => [coord[1], coord[0]]);
+      const polyline_hrut = L.polyline(coords_hrut); // ne pas ajouter à la carte pour éviter les doublons
+      addDirectionalArrows(polyline_hrut, 'black', routeHrutLayer, "Hrut", "pour la date, cf description");
+    });
+  });
   
   
   // Gestion 'Tout désélectionner'
