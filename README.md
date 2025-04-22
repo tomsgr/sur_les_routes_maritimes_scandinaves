@@ -1,4 +1,6 @@
-# 🗺️ Carte interactive des déplacements navals des Normands (IXe siècle)
+**!! PROJET EN DEVELOPPEMENT !!**
+
+# Carte interactive des déplacements navals des Normands (IXe siècle)
 
 Ce projet est une **carte interactive en JavaScript (Leaflet.js)** retraçant les voyages maritimes des Normands au IXe siècle, selon plusieurs sources narratives. Il a été réalisé dans le cadre d’un mémoire de master SDH à l'Université Paris 1 Panthéon-Sorbonne, avec le soutien du [**PIREH**](https://github.com/PirehP1/).
 
@@ -46,7 +48,7 @@ Une **carte de chaleur** des lieux évoqués est également intégrée pour visu
 
 ## 🔗 Démo en ligne
 
-👉 [LIEN À INSÉRER ICI — si vous utilisez GitHub Pages ou un autre hébergement]
+[Pour accéder à la carte, cliquez ici](https://tomsgr.github.io/itineraires_norrois/)
 
 ---
 
