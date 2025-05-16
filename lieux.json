@@ -559,19 +559,6 @@
     ]
   },
   {
-    "ID_lieu": 44,
-    "Nom_lieu": "Limgarðssíða",
-    "Coordonnees": "0, 0",
-    "Type": "other",
-    "Notes": "Coastal stretch in southern Norway by Skaggerak. Limgarðssíða er strandlengja fyrir Austur-Ögðum í Noregi. Nafnið er eins í hdrr. sögunnar (nema S: Lun- ) og flestum öðrum íslenzkum heimildum, en í Heimskr. (sjá Ísl. fornr. XXVIII, 309) stendur Lungarðssíða. Magnus Olsen (Norrøne  studier 38 o. áfr.) telur þá mynd upphaflegri og komi það fram í nútíðarörnefninu Lyngør (ÍF XII, 18-19). ",
-    "lat": 0.0,
-    "lon": 0.0,
-    "leaflet_coords": [
-      0.0,
-      0.0
-    ]
-  },
-  {
     "ID_lieu": 45,
     "Nom_lieu": "Kaldbakshorn",
     "Coordonnees": "65.863476, -21.301152",
@@ -2069,14 +2056,14 @@
   {
     "ID_lieu": 160,
     "Nom_lieu": "Stokkssund",
-    "Coordonnees": "0, 0",
+    "Coordonnees": "59.326709, 18.068386",
     "Type": "estuary",
     "Notes": "Stokksund (svo X; Stokka-(?) O; sl. Z) mun vera aðalós Lagarins, sem nú heitir Norrström og liggur í gegnum Stokkhólm. Sbr. Ísl. fornr. XXVII, 7-9 (ÍF XII, 17). ",
-    "lat": 0.0,
-    "lon": 0.0,
+    "lat": 59.326709,
+    "lon": 18.068386,
     "leaflet_coords": [
-      0.0,
-      0.0
+      59.326709,
+      18.068386
     ]
   },
   {

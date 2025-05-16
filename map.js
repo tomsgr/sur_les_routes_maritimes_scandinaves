@@ -1,12 +1,20 @@
 document.addEventListener('DOMContentLoaded', () => {
 
-  const map = L.map('map').setView([63.5, -20], 4);
+  const map = L.map('map').setView([63.5, -20], 3);
 
   // Fond de carte OpenStreetMap
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; OpenStreetMap contributors'
   }).addTo(map);
+
+  //transforme les lettres avec accent en version simple
+  function normalizeText(str) {
+    return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().trim();
+  }
   
+  const placeMarkers = {}; // nom du lieu -> marker
+  const allBounds = [];
+
 // --- Ajout des flèches dynamiques avec PolylineDecorator pour chaque trajet ---
 
 function addDirectionalArrows(lineLayer, color, targetGroup, popupText, note) {
@@ -57,7 +65,7 @@ panel.id = 'side-panel';
 panel.innerHTML = `
   <div id="panel-content">
     <h2>Présentation</h2>
-    <p>Sélectionnez un voyageur sur la carte pour visualiser son itinéraire. Cliquez sur le tracé d'un itinéraire pour afficher la date. Vous pouvez également consulter les fiches descriptives ici en cochant un itinéraire.</p>
+    <p>Sélectionnez un voyageur sur la carte pour visualiser son itinéraire. Cliquez sur le tracé d'un itinéraire pour afficher la date. Vous pouvez également consulter les fiches descriptives ici en cochant un itinéraire et rechercher un lieu avec la barre de recherche en bas à gauche de la carte.</p>
     <ul id="traveler-list" style="padding-left: 1em; margin-top: 1em;"></ul>
     <div id="traveler-description" class="traveler-description"></div>
   </div>
@@ -389,6 +397,12 @@ function openPanel() {
       data.forEach(p => {
         const marker = L.marker([p.lat, p.lon]).addTo(ensembleLayer);
         marker.bindPopup(`<strong>${p.Nom_lieu}</strong><br>Type : ${p.Type}<br>Note : ${p.description}`);
+      
+        // Ajoute au tableau pour zoomer automatiquement si besoin
+        allBounds.push([p.lat, p.lon]);
+
+        // Stocke le marqueur sous nom normalisé pour recherche
+        placeMarkers[normalizeText(p.Nom_lieu)] = marker;
       });
     });
 
@@ -667,5 +681,87 @@ function openPanel() {
       toggleAllBtn.innerText = allVisible ? 'Tout désélectionner' : 'Tout sélectionner';
     });
   }
+
+  //barre de recherche
+  const searchContainer = document.createElement('div');
+  searchContainer.id = 'search-container';
+  searchContainer.innerHTML = `
+    <input type="text" id="search-box" placeholder="Rechercher un lieu..." autocomplete="off">
+    <ul id="suggestions" class="suggestions-list"></ul>
+  `;
+  document.body.appendChild(searchContainer);
+
+  style.innerHTML += `
+  #search-container {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    z-index: 2001;
+    background: white;
+    border-radius: 4px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    padding: 8px;
+    width: 240px;
+    font-family: inherit;
+  }
+  #search-box {
+    width: 100%;
+    padding: 6px;
+    padding-right: 0px;
+    font-size: 14px;
+    border: none;
+    border-radius: 4px;
+  }
+  .suggestions-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    max-height: 150px;
+    overflow-y: auto;
+  }
+  .suggestions-list li {
+    padding: 6px;
+    cursor: pointer;
+  }
+  .suggestions-list li:hover {
+    background-color: #f0f0f0;
+  }
+  `;
+
+  const searchBox = document.getElementById('search-box');
+  const suggestions = document.getElementById('suggestions');
+  
+  searchBox.addEventListener('input', () => {
+    const value = normalizeText(searchBox.value);
+    suggestions.innerHTML = '';
+  
+    if (value.length === 0) return;
+  
+    const matches = Object.keys(placeMarkers).filter(name => name.includes(value));
+  
+    matches.forEach(name => {
+      const item = document.createElement('li');
+      item.textContent = name;
+      item.addEventListener('click', () => {
+        const marker = placeMarkers[name];
+        if (marker) {
+          map.setView(marker.getLatLng(), 8);
+          marker.openPopup();
+        }
+        suggestions.innerHTML = '';
+        searchBox.value = '';
+      });
+      suggestions.appendChild(item);
+    });
+  });
+  
+  // Ferme les suggestions si on clique ailleurs
+  document.addEventListener('click', (e) => {
+    if (!searchContainer.contains(e.target)) {
+      suggestions.innerHTML = '';
+    }
+  });
+  
+  
   
 })
