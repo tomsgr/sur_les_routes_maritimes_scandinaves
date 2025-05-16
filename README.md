@@ -48,7 +48,7 @@ Une **carte de chaleur** des lieux évoqués est également intégrée pour visu
 
 ## 🔗 Démo en ligne
 
-[Pour accéder à la carte, cliquez ici](https://tomsgr.github.io/Sur_les_routes_maritimes_scandinaves/)
+[Pour accéder à la carte, cliquez ici](https://tomsgr.github.io/sur_les_routes_maritimes_scandinaves/)
 
 ---
 
