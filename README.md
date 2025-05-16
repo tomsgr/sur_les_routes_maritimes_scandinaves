@@ -40,7 +40,7 @@ Une **carte de chaleur** des lieux évoqués est également intégrée pour visu
    - Cochez les cases dans la **légende** pour afficher ou masquer les itinéraires.
    - Chaque voyageur déclenche l’ouverture d’un **panneau latéral** avec une fiche descriptive.
 
-3. **Carte de chaleur** :
+3. (pas encore disponible) **Carte de chaleur** :
    - Activez ou désactivez la carte de chaleur des lieux mentionnés dans les sources via la légende.
    - Cette couche permet de visualiser la densité des mentions géographiques.
 
