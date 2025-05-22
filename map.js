@@ -57,6 +57,7 @@ const travelerColors = {
   "Óttarr (Ohthere)": "beige",
   "Wulfstan": "brown",
   "Hrut Herjólfsson": "black",
+  "Gunnar Hamundarson": "grey",
 };
 
 // Panneau latéral rétractable fixe sur le côté droit
@@ -65,7 +66,7 @@ panel.id = 'side-panel';
 panel.innerHTML = `
   <div id="panel-content">
     <h2>Présentation</h2>
-    <p>Sélectionnez un voyageur sur la carte pour visualiser son itinéraire. Cliquez sur le tracé d'un itinéraire pour afficher la date. Vous pouvez également consulter les fiches descriptives ici en cochant un itinéraire et rechercher un lieu avec la barre de recherche en bas à gauche de la carte.</p>
+    <p>Sélectionnez un voyageur sur la carte pour visualiser son itinéraire. Cliquez sur le tracé d'un itinéraire pour afficher la date. Vous pouvez également consulter les fiches descriptives ici en cochant un itinéraire et rechercher un lieu avec la barre de recherche en bas à gauche de la carte. Les données sont disponibles sur le GitHub suivant: <a href="https://github.com/tomsgr/sur_les_routes_maritimes_scandinaves" target="_blank">lien du GitHub</a></p>  
     <ul id="traveler-list" style="padding-left: 1em; margin-top: 1em;"></ul>
     <div id="traveler-description" class="traveler-description"></div>
   </div>
@@ -225,7 +226,8 @@ const travelerDescriptions = {
   "Kollr": "Selon le Livre de la colonisation de l'Islande (S15, H15), Après avoir voyagé avec son frère juré Ørlyggr, le bateau de Kollr se sépare du reste à cause d'une tempête après que Kollr ait invoqué Thor. Kollr atterrit alors à Kollsvik.", 
   "Óttarr (Ohthere)": "Selon le récit d'Óttarr lui même, rapporté dans la Chronique Anglo-Saxonne, Óttarr, marchand norvégien part pour un premier voyage vers l'extrême nord de la Norvège. Il y raconte son voyage de manière précise, décrivant les peuples qu'il croise: Finnas, Terfinnas, Beormas et Cwenas ainsi que ses motivations: obtenir de l'ivoire de morse. Son deuxième trajet est celui qui l'emmène au port de l'actuelle Oslo, Kaupang, puis à Hedeby au Danemark, véritable épicentre du commerce danois. On ne sait pas exactement pourquoi Ohthere se rend en Angleterre, mais il est probable que ce soit pour établir de nouvelles routes commerciales vers le pays. C'est ainsi que le roi Alfred du Wessex, certainement intrigué par les habitudes et les coutumes d'un marchand issu du peuple du Nord, récemment installé en Angleterre, intègre son récit dans sa chronique.<br>Pour plus d'informations: <a href=https://fr.wikipedia.org/wiki/Ottar_du_H%C3%A5logaland target='_blank'>cliquez ici</a> ",
   "Wulfstan": "Wulfstan voit son récit inséré juste après celui d'Óttarr dans la Chronique Ango-Saxonne, toutefois, on ne connaît pas la relation qui unit les deux personnages. Il est probable que leurs récits aient été regroupés en fonction du caractère géographique de ces derniers. Dans son récit, Wulfstan ne donne aucune de ses motivations mais décrit très précisément l'organisation et les coutumes des peuples qu'il croise. <br>Pour plus d'informations: <a href=https://fr.wikipedia.org/wiki/Wulfstan_de_Hedeby target='_blank'>cliquez ici</a>",
-  "Hrut Herjólfsson": "Selon la saga de Njall le Brûlé, Hrut et son demi-frère Höskuld vivent tous deux en Islande depuis le décès de leur mère. En 960, alors qu'ils se rendent au thing, l'assemblée annuelle d'Islande, Hrut demande la main de Unn, fille de Mörd, homme très respecté pour sa connaissance du droit. Avant qu'ils puissent se marier, Hrut est contraint de partir en Norvège pour réclamer l'héritage de son demi-frère (pas Höskuld). Il part donc cette même année vers Konungahella à la cour de Harald le Gris, où il entretient une relation avec la mère d'Harald, Gunnhild. Après avoir poursuivi son proche Soti qui possède l'héritage et l'avoir récupéré, Hrut retourne chez lui. Toutefois, Gunnhild lui jette un sort pour qu'il ne puisse avoir un mariage heureux avec une autre femme. Hrut est alors accusé d'impuissance par sa femme qui demande le divorce à son père lors du thing. Mörd cherche alors à récupérer la dot de sa fille mais Hrut refuse et le défie en duel que Mörd refuse, entraînant le gain du procès par Hrut. Unn finit par récupérer son argent grâce à Gunnar bien plus tard et Hrut se remarie avec Hallveiga."
+  "Hrut Herjólfsson": "Selon la saga de Njall le Brûlé, Hrut et son demi-frère Höskuld vivent tous deux en Islande depuis le décès de leur mère. En 960, alors qu'ils se rendent au thing, l'assemblée annuelle d'Islande, Hrut demande la main de Unn, fille de Mörd, homme très respecté pour sa connaissance du droit. Avant qu'ils puissent se marier, Hrut est contraint de partir en Norvège pour réclamer l'héritage de son demi-frère (pas Höskuld). Il part donc cette même année vers Konungahella à la cour de Harald le Gris, où il entretient une relation avec la mère d'Harald, Gunnhild. Après avoir poursuivi son proche Soti qui possède l'héritage et l'avoir récupéré, Hrut retourne chez lui. Toutefois, Gunnhild lui jette un sort pour qu'il ne puisse avoir un mariage heureux avec une autre femme. Hrut est alors accusé d'impuissance par sa femme qui demande le divorce à son père lors du thing. Mörd cherche alors à récupérer la dot de sa fille mais Hrut refuse et le défie en duel que Mörd refuse, entraînant le gain du procès par Hrut. Unn finit par récupérer son argent grâce à Gunnar bien plus tard et Hrut se remarie avec Hallveiga.",
+  "Gunnar Hamundarson": "Selon la saga de Njall le Brûlé, Gunnar, chef local islandais du Xe siècle, vit à Hlíðarendi et est le troisième mari de Hallgerðr Höskuldsdóttir, la fille d'Höskuld, frère de Hrut. Décrit comme quasiement invincible au combat, Gunnar s'en va piller vers 970, cherchant gloire et richesse à l'ouest. Il longe ainsi "
 };
 
 
@@ -248,6 +250,7 @@ function openPanel() {
   const routeOhthereLayer = L.layerGroup();
   const routeWulfstanLayer = L.layerGroup();  
   const routeHrutLayer = L.layerGroup();
+  const routeGunnarLayer = L.layerGroup();
   const ensembleLayer = L.layerGroup();
   const commerceLayer = L.layerGroup();
 
@@ -264,6 +267,7 @@ function openPanel() {
     {id: 'toggleRouteOhthere', layer: routeOhthereLayer, name: 'Óttarr (Ohthere)'},
     {id: 'toggleRouteWulfstan', layer: routeWulfstanLayer, name: 'Wulfstan'},
     {id: 'toggleRouteHrut', layer: routeHrutLayer, name: 'Hrut Herjólfsson'},
+    {id: 'toggleRouteGunnar', layer: routeGunnarLayer, name: 'Gunnar Hamundarson'},
     {id: 'toggleRouteEnsemble', layer: ensembleLayer, name: 'Ensemble des lieux cités dans les sources islandaises'},
     {id: 'toggleRouteCommerce', layer: commerceLayer, name: 'Ensemble des lieux de commerce importants'},
 
@@ -386,6 +390,16 @@ function openPanel() {
     .then(data => {
       data.forEach(p => {
         const marker = L.marker([p.lat, p.lon]).addTo(routeHrutLayer);
+        marker.bindPopup(`<strong>${p.lieu}</strong><br>Type : ${p.Type}`);
+      });
+    });
+
+  // Chargement des points de Gunnar
+  fetch('gunnar.json')
+    .then(res => res.json())
+    .then(data => {
+      data.forEach(p => {
+        const marker = L.marker([p.lat, p.lon]).addTo(routeGunnarLayer);
         marker.bindPopup(`<strong>${p.lieu}</strong><br>Type : ${p.Type}`);
       });
     });
@@ -657,7 +671,26 @@ function openPanel() {
     });
   });
   
-  
+  // Trajet Gunnar
+  fetch('trajet_gunnar.geojson')
+  .then(res => res.json())
+  .then(data => {
+    const geoLayer = L.geoJSON(data, {
+      style: {
+        color: 'grey',
+        weight: 4,
+        dashArray: '12 8'
+      }
+    }).addTo(routeGunnarLayer);
+
+    // 🔽 Pour chaque feature (trajet), créer une polyline avec flèches
+    data.features.forEach(feature => {
+      const coords_gunnar = feature.geometry.coordinates.map(coord => [coord[1], coord[0]]);
+      const polyline_gunnar = L.polyline(coords_gunnar); // ne pas ajouter à la carte pour éviter les doublons
+      addDirectionalArrows(polyline_gunnar, 'grey', routeGunnarLayer, "Gunnar", "pour la date, cf description");
+    });
+  });
+
   // Gestion 'Tout désélectionner'
   const checkboxIds = handlers.map(h=>h.id);
   const layerMap = handlers.reduce((acc,h)=>{acc[h.id]=h.layer;return acc;},{

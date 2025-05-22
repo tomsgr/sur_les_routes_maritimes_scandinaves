@@ -1,0 +1,153 @@
+[
+  {
+    "name": "Gunnar",
+    "lat": 63.726016,
+    "lon": -19.947632,
+    "lieu": "Hlíðarendi",
+    "description": "Départ : va voir un proche",
+    "Type": "farm"
+  },
+  {
+    "name": "Gunnar",
+    "lat": 63.637406,
+    "lon": -20.330133,
+    "lieu": "Bergþórshvoll",
+    "description": "Arrivée : va voir un proche",
+    "Type": "farm"
+  },
+  {
+    "name": "Gunnar",
+    "lat": 65.11143,
+    "lon": -21.69485,
+    "lieu": "Höskuldsstaðir in Laxárdalur",
+    "description": "Arrivée : part pour résoudre un conflit",
+    "Type": "farm"
+  },
+  {
+    "name": "Gunnar",
+    "lat": 65.069466666667,
+    "lon": -21.774833333333,
+    "lieu": "Hrútsstaðir",
+    "description": "Arrivée : part pour résoudre un conflit",
+    "Type": "farm"
+  },
+  {
+    "name": "Gunnar",
+    "lat": 65.123522,
+    "lon": -21.704633,
+    "lieu": "Hjarðarholt í Laxárdal",
+    "description": "Arrivée : rentre chez lui",
+    "Type": "river"
+  },
+  {
+    "name": "Gunnar",
+    "lat": 65.055113,
+    "lon": -21.57555,
+    "lieu": "Haukadalur",
+    "description": "Arrivée : rentre chez lui",
+    "Type": "valley"
+  },
+  {
+    "name": "Gunnar",
+    "lat": 65.028171,
+    "lon": -21.062852,
+    "lieu": "Holtavörðuheiði",
+    "description": "Arrivée : rentre chez lui",
+    "Type":"heath"
+  },
+  {
+    "name": "Gunnar",
+    "lat": 64.25977,
+    "lon": -21.1227,
+    "lieu": "Þingvellir",
+    "description": "Départ : rentre chez lui",
+    "Type": "assembly site"
+  },
+  {
+    "name": "Gunnar",
+    "lat": 63.538471,
+    "lon": -19.73762,
+    "date": "970-01-01",
+    "lieu": "Arnarbælisós",
+    "description": "Départ : veut s'enrichir ou rencontrer le succès",
+    "Type":"estuary"
+  },
+  {
+    "name": "Gunnar",
+    "lat": 59.467408,
+    "lon": 10.535431,
+    "date": "970-01-01",
+    "lieu": "Víkin í Noregi",
+    "description": "Arrivée : veut s'enrichir ou rencontrer le succès"
+  },
+  {
+    "name": "Gunnar",
+    "lat": 57.869485,
+    "lon": 11.882742,
+    "date": "971-01-01",
+    "lieu": "Konungahella",
+    "description": "Départ : veut s'enrichir ou rencontrer le succès"
+  },
+  {
+    "name": "Gunnar",
+    "lat": 55.615605,
+    "lon": 12.863656,
+    "date": "971-01-01",
+    "lieu": "Eyrasund",
+    "description": "Arrivée : veut s'enrichir ou rencontrer le succès",
+    "Type":"other"
+  },
+  {
+    "name": "Gunnar",
+    "lat": 57.0604,
+    "lon": 14.5353,
+    "date": "972-01-01",
+    "lieu": "Smálönd",
+    "description": "Départ : veut s'enrichir ou rencontrer le succès",
+    "Type": "region"
+  },
+  {
+    "name": "Gunnar",
+    "lat": 59.442972,
+    "lon": 24.794535,
+    "date": "972-01-01",
+    "lieu": "Rafala",
+    "description": "Départ : veut s'enrichir ou rencontrer le succès",
+    "Type":"city"
+  },
+  {
+    "name": "Gunnar",
+    "lat": 58.481823,
+    "lon": 22.580965,
+    "date": "972-01-01",
+    "lieu": "Eysýslu",
+    "description": "Départ : veut s'enrichir ou rencontrer le succès",
+    "Type": "island"
+  },
+  {
+    "name": "Gunnar",
+    "lat": 54.491111,
+    "lon": 9.565278,
+    "date": "972-01-01",
+    "lieu": "Heiðabæjar",
+    "description": "Départ : va voir un proche",
+    "Type":"city"
+  },
+  {
+    "name": "Gunnar",
+    "lat": 57.869485,
+    "lon": 11.882742,
+    "date": "972-01-01",
+    "lieu": "Konungahella",
+    "description": "Départ : va à la rencontre de gens importants"
+  },
+  {
+    "name": "Gunnar",
+    "lat": 59.467408,
+    "lon": 10.535431,
+    "date": "973-01-01",
+    "lieu": "Víkin í Noregi",
+    "description": "Départ : rentre chez lui",
+    "Type":"bay"
+  }
+]
