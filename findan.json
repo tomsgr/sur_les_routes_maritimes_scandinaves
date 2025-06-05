@@ -1,0 +1,26 @@
+[
+    {
+        "lieu": "Leinster",
+        "lat": 52.534027,
+        "lon": -6.943513,
+        "Type": "region"
+    },
+    {
+        "lieu": "Orkneyjar",
+        "Type": "country",
+        "lat": 59.0857385698195,
+        "lon": -2.8125
+    },
+    {
+        "lieu": "Tours",
+        "lat": 47.392947, 
+        "lon": 0.682887,
+        "Type": "city"
+    },
+    {
+        "lieu": "Rome",
+        "lat": 41.906887, 
+        "lon": 12.484488,
+        "Type": "city"
+    }
+]
