@@ -465,7 +465,7 @@ function openPanel() {
       }
     }).addTo(routeFlokiLayer);
 
-    // 🔽 Pour chaque feature (trajet), créer une polyline avec flèches
+    // Pour chaque feature (trajet), créer une polyline avec flèches
     data.features.forEach(feature => {
       const coords_floki = feature.geometry.coordinates.map(coord => [coord[1], coord[0]]);
       const polyline_floki = L.polyline(coords_floki); // ne pas ajouter à la carte pour éviter les doublons
@@ -485,7 +485,7 @@ function openPanel() {
       }
     }).addTo(routeNaddodrLayer);
 
-    // 🔽 Pour chaque feature (trajet), créer une polyline avec flèches
+    // Pour chaque feature (trajet), créer une polyline avec flèches
     data.features.forEach(feature => {
       const coords_naddodr = feature.geometry.coordinates.map(coord => [coord[1], coord[0]]);
       const polyline_naddodr = L.polyline(coords_naddodr); // ne pas ajouter à la carte pour éviter les doublons
@@ -531,7 +531,7 @@ function openPanel() {
   });
 
   // Trajet Hjorleifr
-  fetch('trajet_hjorleifr.geojson')
+  fetch('trajet_hjorleifr2.geojson')
   .then(res => res.json())
   .then(data => {
     const layer = L.geoJSON(data, {
