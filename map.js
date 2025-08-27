@@ -66,7 +66,7 @@ panel.id = 'side-panel';
 panel.innerHTML = `
   <div id="panel-content">
     <h2>Présentation</h2>
-    <p>Sélectionnez un voyageur sur la carte pour visualiser son itinéraire. Cliquez sur le tracé d'un itinéraire pour afficher la date. Vous pouvez également consulter les fiches descriptives ici en cochant un itinéraire et rechercher un lieu avec la barre de recherche en bas à gauche de la carte. Les données sont disponibles sur le GitHub suivant: <a href="https://github.com/tomsgr/sur_les_routes_maritimes_scandinaves" target="_blank">lien du GitHub</a></p>  
+    <p>Sélectionnez un voyageur sur la carte pour visualiser son itinéraire. Cliquez sur le tracé d'un itinéraire pour afficher la date. Vous pouvez également consulter les fiches descriptives ici en cochant un itinéraire et rechercher un lieu avec la barre de recherche en bas à gauche de la carte. Une fois les cases de voyageurs cochées, vous pouvez déplacer les bornes chronologiques en bas de la légende pour afficher les trajets en fonction des dates. Les données sont disponibles sur le GitHub suivant: <a href="https://github.com/tomsgr/sur_les_routes_maritimes_scandinaves" target="_blank">lien du GitHub</a></p>  
     <ul id="traveler-list" style="padding-left: 1em; margin-top: 1em;"></ul>
     <div id="traveler-description" class="traveler-description"></div>
   </div>
@@ -275,6 +275,82 @@ function openPanel() {
     {id: 'toggleRouteCommerce', layer: commerceLayer, name: 'Ensemble des lieux de commerce importants'},
 
   ];
+
+  /************ Timeline (double range) ************/
+const tlMin = document.getElementById('tlMin');
+const tlMax = document.getElementById('tlMax');
+const tlMinLabel = document.getElementById('tlMinLabel');
+const tlMaxLabel = document.getElementById('tlMaxLabel');
+
+// périodes par couche (à ajuster)
+const routePeriods = {
+  toggleRouteFloki:       [865, 866],
+  toggleRouteNaddodr:     [850, 851],
+  toggleRouteGardharr:    [860, 861],
+  toggleRouteHjorleifr:   [870, 874],
+  toggleRouteIngolfur:    [874, 877],
+  toggleRouteOrlygur:     [870, 880],
+  toggleRouteKollr:       [870, 880],
+  toggleRouteOhthere:     [875, 880],
+  toggleRouteWulfstan:    [875, 880],
+  toggleRouteFindan:      [845, 860],
+  toggleRouteHrut:        [960, 965],
+  toggleRouteGunnar:      [970, 980],
+  toggleRouteEnsemble:    [800, 1000],
+  toggleRouteCommerce:    [800, 1000]
+};
+
+function overlaps(a0, a1, b0, b1) {
+  return a0 <= b1 && a1 >= b0;
+}
+
+// met à jour les labels + colorie la “plage” sur chaque slider
+function updateTimelineUI() {
+  const lo = Math.min(+tlMin.value, +tlMax.value);
+  const hi = Math.max(+tlMin.value, +tlMax.value);
+  tlMinLabel.textContent = lo;
+  tlMaxLabel.textContent = hi;
+
+  // Remplissage visuel (gradient) sur chaque input
+  const rngMin = +tlMin.min, rngMax = +tlMin.max;
+  const pctLo = ((lo - rngMin) / (rngMax - rngMin)) * 100;
+  const pctHi = ((hi - rngMin) / (rngMax - rngMin)) * 100;
+
+  const track = (el, start, end) => {
+    el.style.background = `linear-gradient(
+      to right,
+      #d0d0d0 0%,
+      #d0d0d0 ${start}%,
+      #7aa6ff ${start}%,
+      #7aa6ff ${end}%,
+      #d0d0d0 ${end}%,
+      #d0d0d0 100%
+    )`;
+  };
+  if (tlMin) track(tlMin, pctLo, pctHi);
+  if (tlMax) track(tlMax, pctLo, pctHi);
+}
+
+function applyTimelineFilter() {
+  updateTimelineUI();
+  const lo = Math.min(+tlMin.value, +tlMax.value);
+  const hi = Math.max(+tlMin.value, +tlMax.value);
+
+  handlers.forEach(h => {
+    const cb = document.getElementById(h.id);
+    if (!cb) return;
+    const [a, b] = routePeriods[h.id] || [800, 1000];
+    const show = cb.checked && overlaps(a, b, lo, hi);
+    if (show) map.addLayer(h.layer); else map.removeLayer(h.layer);
+  });
+}
+
+// écoute en direct
+['input','change'].forEach(evt => {
+  tlMin?.addEventListener(evt, applyTimelineFilter);
+  tlMax?.addEventListener(evt, applyTimelineFilter);
+});
+
   handlers.forEach(h => {
     const cb = document.getElementById(h.id);
     if (!cb) return;
@@ -284,6 +360,7 @@ function openPanel() {
       else map.removeLayer(h.layer);
   
       updateTravelerPanel(h.name, on);
+      applyTimelineFilter();
   
       // Ouvre le panneau si on coche
       if (on) openPanel();
@@ -294,6 +371,7 @@ function openPanel() {
     if (cb && cb.checked) {
       // Déclenche manuellement l'événement change
       cb.dispatchEvent(new Event('change'));
+      applyTimelineFilter();
     }
   });
   
@@ -895,6 +973,24 @@ if (resCheckbox) {
   document.body.appendChild(searchContainer);
 
   style.innerHTML += `
+    #timeline input[type="range"] {
+    height: 6px;
+    border-radius: 999px;
+    outline: none;
+    -webkit-appearance: none;
+    background: #d0d0d0;
+  }
+  #timeline input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 14px; height: 14px; border-radius: 50%;
+    background: #2b6cb0; border: 2px solid white; box-shadow: 0 0 2px rgba(0,0,0,.4);
+    cursor: pointer;
+  }
+  #timeline input[type="range"]::-moz-range-thumb {
+    width: 14px; height: 14px; border-radius: 50%;
+    background: #2b6cb0; border: 2px solid white; box-shadow: 0 0 2px rgba(0,0,0,.4);
+    cursor: pointer;
+  }
   #search-container {
     position: fixed;
     bottom: 20px;
