@@ -477,6 +477,7 @@ const resourceIcons = {
   "Ivoire de morse":"🦦"
 };
 
+
 const resourcesData = [
   { name: "Norvège",   lat: 61.5, lng: 8.0,   resources: ["Fer", "Bois", "Pierre"] },
   { name: "Islande",   lat: 64.9, lng: -18.6, resources: ["Laine", "Soufre","Faucons"] },
@@ -562,6 +563,32 @@ if (resCheckbox) {
     }
   });
 }
+// Légende des ressources (à afficher seulement si cochée)
+const resourceLegendEl = document.getElementById("resource-legend");
+
+// Contenu mini-légende
+const resourceLegendHTML = `
+  🌲 Bois &nbsp; ⛏️ Fer &nbsp; 🪨 Stéatite/Pierre à aiguiser <br>
+  🍷 Vin &nbsp; 💍 Bijoux &nbsp; 🐟 Poisson <br>
+  🧂 Sel &nbsp; 🧶 Laine &nbsp; 🦊 Fourrures <br>
+  🧿 Ambre &nbsp; 🧪 Soufre &nbsp; 🍯 Miel &nbsp; 🐄 Bétail &nbsp; 🌾 Grain
+`;
+
+// Ajuste le toggle pour afficher/masquer la mini-légende
+if (resCheckbox) {
+  resCheckbox.addEventListener("change", (e) => {
+    if (e.target.checked) {
+      resourcesLayer.addTo(map);
+      resourceLegendEl.style.display = "block";
+      resourceLegendEl.innerHTML = resourceLegendHTML;
+    } else {
+      map.removeLayer(resourcesLayer);
+      resourceLegendEl.style.display = "none";
+      resourceLegendEl.innerHTML = "";
+    }
+  });
+}
+
   // Trajet Flóki
   fetch('trajet_floki.geojson')
   .then(res => res.json())
