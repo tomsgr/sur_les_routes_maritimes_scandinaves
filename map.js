@@ -453,6 +453,115 @@ function openPanel() {
       });
     });
 
+  // icone ressources
+const resourceIcons = {
+  "Ambre": "🧿",
+  "Laine": "🧶",
+  "Sel": "🧂",
+  "Fourrures": "🦊",
+  "Fer": "⛏️",
+  "Poisson": "🐟",
+  "Bois": "🌲",
+  "Vin": "🍷",
+  "Soufre": "🧪",
+  "Bijoux": "💍",
+  "Pierre": "🪨",
+  "Stéatite": "🪨",
+  "Grain": "🌾",
+  "Bétail": "🐄",
+  "Miel": "🍯",
+  "Armes":"⚔️",
+  "Esclaves": "🧑‍🤝‍🧑",
+  "Faucons":"🦅",
+  "Epices": "🌶️",
+  "Ivoire de morse":"🦦"
+};
+
+const resourcesData = [
+  { name: "Norvège",   lat: 61.5, lng: 8.0,   resources: ["Fer", "Bois", "Pierre"] },
+  { name: "Islande",   lat: 64.9, lng: -18.6, resources: ["Laine", "Soufre","Faucons"] },
+  { name: "Danemark",  lat: 56.2, lng: 10.0,  resources: ["Poisson", "Sel", "Bois"] },
+  { name: "Suède",     lat: 62.0, lng: 15.0,  resources: ["Fer", "Bois", "Fourrures"] },
+  { name: "Bulgares",  lat: 56.2, lng: 50.0,  resources: ["Esclaves","Fourrures", "Miel" ] },
+  { name: "Frise",     lat: 53.2, lng: 6.0,   resources: ["Bijoux", "Vin","Armes"] }, // zones frisonnes
+  { name: "Angleterre",lat: 52.5, lng: -1.5,  resources: ["Laine", "Grain", "Miel"] },
+  { name: "Irlande",   lat: 53.4, lng: -8.3,  resources: ["Bétail", "Laine"] },
+  { name: "Francie",   lat: 47.2, lng: 2.4,   resources: ["Vin", "Sel"] },
+  { name: "Bretagne",  lat: 48.2, lng: -3.2,  resources: ["Sel", "Poisson","Laine"] },
+  { name: "Baltique",  lat: 56.8, lng: 20.5,  resources: ["Ambre", "Poisson"] },
+  { name: "Rus'",      lat: 58.9, lng: 33.3,  resources: ["Fourrures", "Miel", "Esclaves"] },
+  { name: "Empire Byzantin",   lat: 39.2, lng: 30.2,   resources: ["Bijoux", "Vin", "Epices"] },
+  { name: "Finnmark",   lat: 70.0, lng: 23.9,   resources: ["Poisson", "Fourrures", "Ivoire de morse"] },
+
+];
+
+const resourcesLayer = L.layerGroup();
+
+function makeResourceHTML(list) {
+  if (list.length === 1) {
+    return `<div class="res-icons">${resourceIcons[list[0]] || "•"}</div>`;
+  }
+  if (list.length === 2) {
+    return `
+      <div class="res-icons">
+        <div>${resourceIcons[list[0]] || "•"}</div>
+        <div style="display:flex;gap:4px;justify-content:center;">
+          <div>${resourceIcons[list[1]] || "•"}</div>
+        </div>
+      </div>`;
+  }
+  if (list.length === 3) {
+    return `
+      <div class="res-icons">
+        <div style="text-align:center;">${resourceIcons[list[0]] || "•"}</div>
+        <div style="display:flex;gap:4px;justify-content:center;">
+          <div>${resourceIcons[list[1]] || "•"}</div>
+          <div>${resourceIcons[list[2]] || "•"}</div>
+        </div>
+      </div>`;
+  }
+  if (list.length === 4) {
+    return `
+      <div class="res-icons">
+        <div style="text-align:center;">${resourceIcons[list[0]] || "•"}</div>
+        <div style="display:flex;gap:4px;justify-content:center;">
+          <div>${resourceIcons[list[1]] || "•"}</div>
+          <div>${resourceIcons[list[2]] || "•"}</div>
+        </div>
+        <div style="text-align:center;">${resourceIcons[list[3]] || "•"}</div>
+      </div>`;
+  }
+  // pour plus de 4, on met en colonne par défaut
+  return `<div class="res-icons">${list.map(r => resourceIcons[r] || "•").join("<br>")}</div>`;
+}
+
+
+function makeResourceMarker(entry) {
+  const html = makeResourceHTML(entry.resources);
+  const divIcon = L.divIcon({
+    html,
+    className: "res-divicon",
+    iconSize: [28, 28],
+    iconAnchor: [14, 14]
+  });
+  const popupHtml = `<strong>${entry.name}</strong><br>Ressources : ${entry.resources.join(", ")}`;
+  return L.marker([entry.lat, entry.lng], { icon: divIcon }).bindPopup(popupHtml);
+}
+
+// Préparer la couche (non affichée par défaut)
+resourcesData.forEach(e => resourcesLayer.addLayer(makeResourceMarker(e)));
+
+// Toggle via la case de la légende (id="toggleRessources")
+const resCheckbox = document.getElementById("toggleRessources");
+if (resCheckbox) {
+  resCheckbox.addEventListener("change", (e) => {
+    if (e.target.checked) {
+      resourcesLayer.addTo(map);
+    } else {
+      map.removeLayer(resourcesLayer);
+    }
+  });
+}
   // Trajet Flóki
   fetch('trajet_floki.geojson')
   .then(res => res.json())
