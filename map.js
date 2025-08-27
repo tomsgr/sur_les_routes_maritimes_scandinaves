@@ -271,9 +271,6 @@ function openPanel() {
     {id: 'toggleRouteFindan', layer: routeFindanLayer, name: 'Findan de Rheinau'},
     {id: 'toggleRouteHrut', layer: routeHrutLayer, name: 'Hrut Herjólfsson'},
     {id: 'toggleRouteGunnar', layer: routeGunnarLayer, name: 'Gunnar Hamundarson'},
-    {id: 'toggleRouteEnsemble', layer: ensembleLayer, name: 'Ensemble des lieux cités dans les sources islandaises'},
-    {id: 'toggleRouteCommerce', layer: commerceLayer, name: 'Ensemble des lieux de commerce importants'},
-
   ];
 
   /************ Timeline (double range) ************/
@@ -295,9 +292,7 @@ const routePeriods = {
   toggleRouteWulfstan:    [875, 880],
   toggleRouteFindan:      [845, 860],
   toggleRouteHrut:        [960, 965],
-  toggleRouteGunnar:      [970, 980],
-  toggleRouteEnsemble:    [800, 1000],
-  toggleRouteCommerce:    [800, 1000]
+  toggleRouteGunnar:      [970, 980]
 };
 
 function overlaps(a0, a1, b0, b1) {
@@ -512,7 +507,17 @@ function applyTimelineFilter() {
       });
     });
 
-
+  // Toggle via la case de la légende (id="toggleRessources")
+  const resCheckbox2 = document.getElementById("toggleRouteEnsemble");
+  if (resCheckbox2) {
+    resCheckbox2.addEventListener("change", (e) => {
+      if (e.target.checked) {
+        ensembleLayer.addTo(map);
+      } else {
+        map.removeLayer(ensembleLayer);
+      }
+    });
+  }
   // icone points de commerce
   const commerceIcon = L.icon({
     iconUrl: 'commerce.png',
@@ -530,6 +535,18 @@ function applyTimelineFilter() {
         marker.bindPopup(`<strong>${p.lieu}</strong>`);
       });
     });
+
+  // Toggle via la case de la légende (id="toggleRessources")
+  const resCheckbox1 = document.getElementById("toggleRouteCommerce");
+  if (resCheckbox1) {
+    resCheckbox1.addEventListener("change", (e) => {
+      if (e.target.checked) {
+        commerceLayer.addTo(map);
+      } else {
+        map.removeLayer(commerceLayer);
+      }
+    });
+  }
 
   // icone ressources
 const resourceIcons = {
