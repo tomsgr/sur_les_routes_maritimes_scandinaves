@@ -35,14 +35,20 @@ Une **carte de chaleur** des lieux évoqués est également intégrée pour visu
 1. **Navigation** :
    - Vous pouvez vous déplacer librement sur la carte et zoomer à volonté.
    - Cliquez sur un **trajet** pour afficher les dates ou explications.
+   - Recherchez n'importe quel lieu grâce à la barre de recherche
 
 2. **Afficher les voyageurs** :
    - Cochez les cases dans la **légende** pour afficher ou masquer les itinéraires.
    - Chaque voyageur déclenche l’ouverture d’un **panneau latéral** avec une fiche descriptive.
+   - Egalement, une fois les voyageurs cochés, vous pouvez déplacer la borne chronologique pour afficher les trajets en fonction de la date (nouveau !)
 
 3. (pas encore disponible) **Carte de chaleur** :
    - Activez ou désactivez la carte de chaleur des lieux mentionnés dans les sources via la légende.
    - Cette couche permet de visualiser la densité des mentions géographiques.
+  
+4. **Eléments supplémentaires**:
+  - Affichez l'ensemble des ressources principales produites dans les pays visités par les vikings grâce à la légende (nouveau !)
+  - Affichez l'ensemble des lieux mentionnés dans les sources islandaises grâce à la légende
 
 ---
 
