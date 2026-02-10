@@ -8,6 +8,9 @@ document.addEventListener('DOMContentLoaded', () => {
     maxZoom: 13
   }).addTo(map);
 
+  // Ajout de l'échelle (en km uniquement)
+  L.control.scale({ imperial: false }).addTo(map);
+
   //transforme les lettres avec accent en version simple
   function normalizeText(str) {
     return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().trim();
@@ -48,6 +51,19 @@ document.addEventListener('DOMContentLoaded', () => {
           addDirectionalArrows(polyline, arrowColor || color, layer, name, note);
         });
       });
+  }
+
+  // Fonction pour déterminer la couleur selon le type de lieu
+  function getTypeColor(type) {
+    if (!type) return "#95a5a6"; // Gris par défaut
+    const t = type.toLowerCase();
+    if (t.includes('farm') || t.includes('settlement') || t.includes('bær')) return "#d35400"; // Orange (Habitations)
+    if (t.includes('fjord') || t.includes('bay') || t.includes('river') || t.includes('lake') || t.includes('estuary')) return "#3498db"; // Bleu (Eau)
+    if (t.includes('mountain') || t.includes('hill') || t.includes('cliff') || t.includes('ridge')) return "#7f8c8d"; // Gris foncé (Relief)
+    if (t.includes('assembly') || t.includes('thing')) return "#8e44ad"; // Violet (Politique/Social)
+    if (t.includes('island') || t.includes('peninsula')) return "#27ae60"; // Vert (Terres)
+    if (t.includes('city') || t.includes('trading') || t.includes('harbour')) return "#c0392b"; // Rouge (Commerce/Villes)
+    return "#95a5a6"; // Autres
   }
 
 // --- Ajout des flèches dynamiques avec PolylineDecorator pour chaque trajet ---
@@ -342,8 +358,19 @@ function applyTimelineFilter() {
     .then(res => res.json())
     .then(data => {
       data.forEach(p => {
-        const marker = L.marker([p.lat, p.lon]).addTo(ensembleLayer);
-        marker.bindPopup(`<strong>${p.Nom_lieu}</strong><br>Type : ${p.Type}<br>Note : ${p.description}`);
+        // Utilisation de cercles colorés au lieu de marqueurs bleus par défaut
+        const marker = L.circleMarker([p.lat, p.lon], {
+          radius: 5,
+          fillColor: getTypeColor(p.Type),
+          color: "#000",
+          weight: 1,
+          opacity: 1,
+          fillOpacity: 0.8
+        }).addTo(ensembleLayer);
+        
+        // Correction: utilisation de p.Notes si p.description est vide (basé sur votre JSON)
+        const note = p.description || p.Notes || "";
+        marker.bindPopup(`<strong>${p.Nom_lieu}</strong><br>Type : ${p.Type}<br>Note : ${note}`);
       
         // Ajoute au tableau pour zoomer automatiquement si besoin
         allBounds.push([p.lat, p.lon]);
