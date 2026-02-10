@@ -2,9 +2,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const map = L.map('map').setView([63.5, -20], 3);
 
-  // Fond de carte OpenStreetMap
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '&copy; OpenStreetMap contributors'
+  // Fond de carte Esri World Ocean Base (plus adapté pour les routes maritimes)
+  L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/Ocean/World_Ocean_Base/MapServer/tile/{z}/{y}/{x}', {
+    attribution: 'Tiles &copy; Esri &mdash; Sources: GEBCO, NOAA, CHS, OSU, UNH, CSUMB, National Geographic, DeLorme, NAVTEQ, and Esri',
+    maxZoom: 13
   }).addTo(map);
 
   //transforme les lettres avec accent en version simple
