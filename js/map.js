@@ -371,7 +371,7 @@ function applyTimelineFilter() {
   });
   
   // Chargement des points de floki.json
-  fetch('floki.json')
+  fetch('data/floki.json')
     .then(res => res.json())
     .then(data => {
       data.forEach(p => {
@@ -381,7 +381,7 @@ function applyTimelineFilter() {
     });
 
   // Chargement des points de Naddodr
-  fetch('naddodr.json')
+  fetch('data/naddodr.json')
     .then(res => res.json())
     .then(data => {
       data.forEach(p => {
@@ -391,7 +391,7 @@ function applyTimelineFilter() {
     });
 
   // Chargement des points de Gardharr
-  fetch('gardharr.json')
+  fetch('data/gardharr.json')
     .then(res => res.json())
     .then(data => {
       data.forEach(p => {
@@ -401,7 +401,7 @@ function applyTimelineFilter() {
     });  
 
   // Chargement des points de Hjorleifr
-  fetch('hjorleifr.json')
+  fetch('data/hjorleifr.json')
     .then(res => res.json())
     .then(data => {
       data.forEach(p => {
@@ -411,7 +411,7 @@ function applyTimelineFilter() {
     });  
   
   // Chargement des points de Ingolfur
-  fetch('ingolfur.json')
+  fetch('data/ingolfur.json')
     .then(res => res.json())
     .then(data => {
       data.forEach(p => {
@@ -421,7 +421,7 @@ function applyTimelineFilter() {
     }); 
 
   // Chargement des points de Orlygur
-  fetch('orlygur.json')
+  fetch('data/orlygur.json')
     .then(res => res.json())
     .then(data => {
       data.forEach(p => {
@@ -431,7 +431,7 @@ function applyTimelineFilter() {
     });
   
   // Chargement des points de Kollr
-  fetch('kollr.json')
+  fetch('data/kollr.json')
     .then(res => res.json())
     .then(data => {
       data.forEach(p => {
@@ -441,7 +441,7 @@ function applyTimelineFilter() {
     });
 
   // Chargement des points de Ohthere
-  fetch('ohthere.json')
+  fetch('data/ohthere.json')
     .then(res => res.json())
     .then(data => {
       data.forEach(p => {
@@ -451,7 +451,7 @@ function applyTimelineFilter() {
     });
 
   // Chargement des points de Wulfstan
-  fetch('wulfstan.json')
+  fetch('data/wulfstan.json')
     .then(res => res.json())
     .then(data => {
       data.forEach(p => {
@@ -461,7 +461,7 @@ function applyTimelineFilter() {
     });
 
   // Chargement des points de Hrut
-  fetch('hrut.json')
+  fetch('data/hrut.json')
     .then(res => res.json())
     .then(data => {
       data.forEach(p => {
@@ -471,7 +471,7 @@ function applyTimelineFilter() {
     });
 
   // Chargement des points de Gunnar
-  fetch('gunnar.json')
+  fetch('data/gunnar.json')
     .then(res => res.json())
     .then(data => {
       data.forEach(p => {
@@ -481,7 +481,7 @@ function applyTimelineFilter() {
     });
 
   // Chargement des points de Gunnar
-  fetch('findan.json')
+  fetch('data/findan.json')
     .then(res => res.json())
     .then(data => {
       data.forEach(p => {
@@ -492,7 +492,7 @@ function applyTimelineFilter() {
 
 
   // Chargement des points de ensemble
-  fetch('lieux.json')
+  fetch('data/lieux.json')
     .then(res => res.json())
     .then(data => {
       data.forEach(p => {
@@ -520,14 +520,14 @@ function applyTimelineFilter() {
   }
   // icone points de commerce
   const commerceIcon = L.icon({
-    iconUrl: 'commerce.png',
+    iconUrl: 'assets/commerce.png',
     iconSize: [28, 28],
     iconAnchor: [14, 28],
     popupAnchor: [0, -28]
   });
   
   // Chargement des points de commerce
-  fetch('lieux_commerce.json')
+  fetch('data/lieux_commerce.json')
     .then(res => res.json())
     .then(data => {
       data.forEach(p => {
@@ -685,7 +685,7 @@ if (resCheckbox) {
 }
 
   // Trajet Flóki
-  fetch('trajet_floki.geojson')
+  fetch('data/trajet_floki.geojson')
   .then(res => res.json())
   .then(data => {
     const geoLayer = L.geoJSON(data, {
@@ -705,7 +705,7 @@ if (resCheckbox) {
   });
   
   // Trajet Naddódr
-  fetch('trajet_naddodr.geojson')
+  fetch('data/trajet_naddodr.geojson')
   .then(res => res.json())
   .then(data => {
     const geoLayer = L.geoJSON(data, {
@@ -725,7 +725,7 @@ if (resCheckbox) {
   });
 
   // Trajet Gardharr
-  fetch('trajet_gardharr.geojson')
+  fetch('data/trajet_gardharr.geojson')
   .then(res => res.json())
   .then(data => {
     const geoLayer = L.geoJSON(data, {
@@ -744,7 +744,7 @@ if (resCheckbox) {
     });
   });
   // Trajet Hjorleifr + Ingolfur
-  fetch('trajet_hjorleifr+ingolfur.geojson')
+  fetch('data/trajet_hjorleifr+ingolfur.geojson')
   .then(res => res.json())
   .then(data => {
     const layer = L.geoJSON(data, {
@@ -762,7 +762,7 @@ if (resCheckbox) {
   });
 
   // Trajet Hjorleifr
-  fetch('trajet_hjorleifr2.geojson')
+  fetch('data/trajet_hjorleifr2.geojson')
   .then(res => res.json())
   .then(data => {
     const layer = L.geoJSON(data, {
@@ -779,7 +779,7 @@ if (resCheckbox) {
     });
   });
   // Trajet Hjorleifr + Ingolfur
-  fetch('trajet_hjorleifr+ingolfur.geojson')
+  fetch('data/trajet_hjorleifr+ingolfur.geojson')
   .then(res => res.json())
   .then(data => {
     const layer = L.geoJSON(data, {
@@ -797,7 +797,7 @@ if (resCheckbox) {
   });  
 
   // Trajet Ingolfur
-  fetch('trajet_ingolfur.geojson')
+  fetch('data/trajet_ingolfur.geojson')
   .then(res => res.json())
   .then(data => {
     const geoLayer = L.geoJSON(data, {
@@ -817,7 +817,7 @@ if (resCheckbox) {
   });
 
     // Trajet Orlygur
-    fetch('trajet_orlygur.geojson')
+    fetch('data/trajet_orlygur.geojson')
     .then(res => res.json())
     .then(data => {
       const geoLayer = L.geoJSON(data, {
@@ -837,7 +837,7 @@ if (resCheckbox) {
     });
 
     // Trajet Kollr
-    fetch('trajet_kollr.geojson')
+    fetch('data/trajet_kollr.geojson')
     .then(res => res.json())
     .then(data => {
       const geoLayer = L.geoJSON(data, {
@@ -857,7 +857,7 @@ if (resCheckbox) {
     });
 
   // Trajet Ohthere
-  fetch('trajet_ohthere.geojson')
+  fetch('data/trajet_ohthere.geojson')
   .then(res => res.json())
   .then(data => {
     const geoLayer = L.geoJSON(data, {
@@ -877,7 +877,7 @@ if (resCheckbox) {
   });
 
   // Trajet Wulfstan
-  fetch('trajet_wulfstan.geojson')
+  fetch('data/trajet_wulfstan.geojson')
   .then(res => res.json())
   .then(data => {
     const geoLayer = L.geoJSON(data, {
@@ -897,7 +897,7 @@ if (resCheckbox) {
   });
 
   // Trajet Findan
-  fetch('trajet_findan.geojson')
+  fetch('data/trajet_findan.geojson')
   .then(res => res.json())
   .then(data => {
     const geoLayer = L.geoJSON(data, {
@@ -917,7 +917,7 @@ if (resCheckbox) {
   });
 
   // Trajet Hrut
-  fetch('trajet_hrut.geojson')
+  fetch('data/trajet_hrut.geojson')
   .then(res => res.json())
   .then(data => {
     const geoLayer = L.geoJSON(data, {
@@ -937,7 +937,7 @@ if (resCheckbox) {
   });
   
   // Trajet Gunnar
-  fetch('trajet_gunnar.geojson')
+  fetch('data/trajet_gunnar.geojson')
   .then(res => res.json())
   .then(data => {
     const geoLayer = L.geoJSON(data, {

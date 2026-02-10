@@ -30,6 +30,16 @@ Une **carte de chaleur** des lieux évoqués est également intégrée pour visu
 
 ---
 
+## Structure du projet
+
+- `index.html` : Page principale
+- `js/` : Scripts JavaScript (`map.js`, `leaflet.polylineDecorator.js`)
+- `data/` : Données JSON et GeoJSON
+- `assets/` : Images et icônes
+- `css/` : Feuilles de style (si applicable)
+
+---
+
 ## Comment utiliser la carte
 
 1. **Navigation** :
@@ -57,4 +67,3 @@ Une **carte de chaleur** des lieux évoqués est également intégrée pour visu
 [Pour accéder à la carte, cliquez ici](https://tomsgr.github.io/sur_les_routes_maritimes_scandinaves/)
 
 ---
-
