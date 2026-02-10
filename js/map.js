@@ -15,6 +15,40 @@ document.addEventListener('DOMContentLoaded', () => {
   const placeMarkers = {}; // nom du lieu -> marker
   const allBounds = [];
 
+  // --- Fonctions Helper pour charger les données ---
+
+  // Charge les points (marqueurs) depuis un fichier JSON
+  function loadPoints(url, layer) {
+    fetch(url)
+      .then(res => res.json())
+      .then(data => {
+        data.forEach(p => {
+          const marker = L.marker([p.lat, p.lon]).addTo(layer);
+          const type = p.type || p.Type || ''; // Gère les différences de casse dans les JSON
+          marker.bindPopup(`<strong>${p.lieu}</strong><br>Type : ${type}`);
+        });
+      });
+  }
+
+  // Charge un trajet (GeoJSON) avec flèches directionnelles
+  function loadRoute(url, layer, color, name, note = '', dashArray = '12 8', arrowColor = null) {
+    fetch(url)
+      .then(res => res.json())
+      .then(data => {
+        L.geoJSON(data, {
+          style: { color: color, weight: 4, dashArray: dashArray }
+        }).addTo(layer);
+
+        data.features.forEach(feature => {
+          // GeoJSON est Lon, Lat. Leaflet veut Lat, Lon.
+          const coords = feature.geometry.coordinates.map(coord => [coord[1], coord[0]]);
+          const polyline = L.polyline(coords);
+          // On n'ajoute pas la polyline à la carte, juste les flèches via le decorator
+          addDirectionalArrows(polyline, arrowColor || color, layer, name, note);
+        });
+      });
+  }
+
 // --- Ajout des flèches dynamiques avec PolylineDecorator pour chaque trajet ---
 
 function addDirectionalArrows(lineLayer, color, targetGroup, popupText, note) {
@@ -288,126 +322,19 @@ function applyTimelineFilter() {
     }
   });
   
-  // Chargement des points de floki.json
-  fetch('data/floki.json')
-    .then(res => res.json())
-    .then(data => {
-      data.forEach(p => {
-        const marker = L.marker([p.lat, p.lon]).addTo(routeFlokiLayer);
-        marker.bindPopup(`<strong>${p.lieu}</strong><br>Type : ${p.type}`);
-      });
-    });
-
-  // Chargement des points de Naddodr
-  fetch('data/naddodr.json')
-    .then(res => res.json())
-    .then(data => {
-      data.forEach(p => {
-        const marker = L.marker([p.lat, p.lon]).addTo(routeNaddodrLayer);
-        marker.bindPopup(`<strong>${p.lieu}</strong><br>Type : ${p.type}`);
-      });
-    });
-
-  // Chargement des points de Gardharr
-  fetch('data/gardharr.json')
-    .then(res => res.json())
-    .then(data => {
-      data.forEach(p => {
-        const marker = L.marker([p.lat, p.lon]).addTo(routeGardharrLayer);
-        marker.bindPopup(`<strong>${p.lieu}</strong><br>Type : ${p.type}`);
-      });
-    });  
-
-  // Chargement des points de Hjorleifr
-  fetch('data/hjorleifr.json')
-    .then(res => res.json())
-    .then(data => {
-      data.forEach(p => {
-        const marker = L.marker([p.lat, p.lon]).addTo(routeHjorleifrLayer);
-        marker.bindPopup(`<strong>${p.lieu}</strong><br>Type : ${p.type}`);
-      });
-    });  
-  
-  // Chargement des points de Ingolfur
-  fetch('data/ingolfur.json')
-    .then(res => res.json())
-    .then(data => {
-      data.forEach(p => {
-        const marker = L.marker([p.lat, p.lon]).addTo(routeIngolfurLayer);
-        marker.bindPopup(`<strong>${p.lieu}</strong><br>Type : ${p.type}`);
-      });
-    }); 
-
-  // Chargement des points de Orlygur
-  fetch('data/orlygur.json')
-    .then(res => res.json())
-    .then(data => {
-      data.forEach(p => {
-        const marker = L.marker([p.lat, p.lon]).addTo(routeOrlygurLayer);
-        marker.bindPopup(`<strong>${p.lieu}</strong><br>Type : ${p.type}`);
-      });
-    });
-  
-  // Chargement des points de Kollr
-  fetch('data/kollr.json')
-    .then(res => res.json())
-    .then(data => {
-      data.forEach(p => {
-        const marker = L.marker([p.lat, p.lon]).addTo(routeKollrLayer);
-        marker.bindPopup(`<strong>${p.lieu}</strong><br>Type : ${p.type}`);
-      });
-    });
-
-  // Chargement des points de Ohthere
-  fetch('data/ohthere.json')
-    .then(res => res.json())
-    .then(data => {
-      data.forEach(p => {
-        const marker = L.marker([p.lat, p.lon]).addTo(routeOhthereLayer);
-        marker.bindPopup(`<strong>${p.lieu}</strong><br>Type : ${p.type}`);
-      });
-    });
-
-  // Chargement des points de Wulfstan
-  fetch('data/wulfstan.json')
-    .then(res => res.json())
-    .then(data => {
-      data.forEach(p => {
-        const marker = L.marker([p.lat, p.lon]).addTo(routeWulfstanLayer);
-        marker.bindPopup(`<strong>${p.lieu}</strong><br>Type : ${p.type}`);
-      });
-    });
-
-  // Chargement des points de Hrut
-  fetch('data/hrut.json')
-    .then(res => res.json())
-    .then(data => {
-      data.forEach(p => {
-        const marker = L.marker([p.lat, p.lon]).addTo(routeHrutLayer);
-        marker.bindPopup(`<strong>${p.lieu}</strong><br>Type : ${p.Type}`);
-      });
-    });
-
-  // Chargement des points de Gunnar
-  fetch('data/gunnar.json')
-    .then(res => res.json())
-    .then(data => {
-      data.forEach(p => {
-        const marker = L.marker([p.lat, p.lon]).addTo(routeGunnarLayer);
-        marker.bindPopup(`<strong>${p.lieu}</strong><br>Type : ${p.Type}`);
-      });
-    });
-
-  // Chargement des points de Gunnar
-  fetch('data/findan.json')
-    .then(res => res.json())
-    .then(data => {
-      data.forEach(p => {
-        const marker = L.marker([p.lat, p.lon]).addTo(routeFindanLayer);
-        marker.bindPopup(`<strong>${p.lieu}</strong><br>Type : ${p.Type}`);
-      });
-    });
-
+  // --- Chargement des points (JSON) ---
+  loadPoints('data/floki.json', routeFlokiLayer);
+  loadPoints('data/naddodr.json', routeNaddodrLayer);
+  loadPoints('data/gardharr.json', routeGardharrLayer);
+  loadPoints('data/hjorleifr.json', routeHjorleifrLayer);
+  loadPoints('data/ingolfur.json', routeIngolfurLayer);
+  loadPoints('data/orlygur.json', routeOrlygurLayer);
+  loadPoints('data/kollr.json', routeKollrLayer);
+  loadPoints('data/ohthere.json', routeOhthereLayer);
+  loadPoints('data/wulfstan.json', routeWulfstanLayer);
+  loadPoints('data/hrut.json', routeHrutLayer);
+  loadPoints('data/gunnar.json', routeGunnarLayer);
+  loadPoints('data/findan.json', routeFindanLayer);
 
   // Chargement des points de ensemble
   fetch('data/lieux.json')
@@ -602,277 +529,24 @@ if (resCheckbox) {
   });
 }
 
-  // Trajet Flóki
-  fetch('data/trajet_floki.geojson')
-  .then(res => res.json())
-  .then(data => {
-    const geoLayer = L.geoJSON(data, {
-      style: {
-        color: 'green',
-        weight: 4,
-        dashArray: '12 8'
-      }
-    }).addTo(routeFlokiLayer);
-
-    // Pour chaque feature (trajet), créer une polyline avec flèches
-    data.features.forEach(feature => {
-      const coords_floki = feature.geometry.coordinates.map(coord => [coord[1], coord[0]]);
-      const polyline_floki = L.polyline(coords_floki); // ne pas ajouter à la carte pour éviter les doublons
-      addDirectionalArrows(polyline_floki, 'green', routeFlokiLayer, "Flóki", "voyage vers 865");
-    });
-  });
+  // --- Chargement des trajets (GeoJSON) ---
+  loadRoute('data/trajet_floki.geojson', routeFlokiLayer, 'green', "Flóki", "voyage vers 865");
+  loadRoute('data/trajet_naddodr.geojson', routeNaddodrLayer, 'rgb(65, 65, 156)', "Naddodr", "voyage vers 850");
+  loadRoute('data/trajet_gardharr.geojson', routeGardharrLayer, 'rgb(240, 109, 109)', "Garðarr Svavarson", "voyage vers 860/861");
   
-  // Trajet Naddódr
-  fetch('data/trajet_naddodr.geojson')
-  .then(res => res.json())
-  .then(data => {
-    const geoLayer = L.geoJSON(data, {
-      style: {
-        color: 'rgb(65, 65, 156)',
-        weight: 4,
-        dashArray: '12 8'
-      }
-    }).addTo(routeNaddodrLayer);
+  // Cas particuliers pour Hjorleifr et Ingolfur (couleurs de flèches spécifiques ou dashArray différents)
+  loadRoute('data/trajet_hjorleifr+ingolfur.geojson', routeHjorleifrLayer, 'rgb(238, 222, 79)', "Hjorleifr", "Pour les dates, cf description", '12 12', 'rgb(233, 233, 132)');
+  loadRoute('data/trajet_hjorleifr2.geojson', routeHjorleifrLayer, 'rgb(233, 233, 132)', "Hjorleifr", "Pour les dates, cf description");
+  loadRoute('data/trajet_hjorleifr+ingolfur.geojson', routeIngolfurLayer, 'orange', "Ingolfur Arnarson", "Pour les dates, cf description");
+  loadRoute('data/trajet_ingolfur.geojson', routeIngolfurLayer, 'orange', "Ingolfur Arnarson", "Pour les dates, cf description");
 
-    // Pour chaque feature (trajet), créer une polyline avec flèches
-    data.features.forEach(feature => {
-      const coords_naddodr = feature.geometry.coordinates.map(coord => [coord[1], coord[0]]);
-      const polyline_naddodr = L.polyline(coords_naddodr); // ne pas ajouter à la carte pour éviter les doublons
-      addDirectionalArrows(polyline_naddodr, 'rgb(65, 65, 156)', routeNaddodrLayer, "Naddodr", "voyage vers 850");
-    });
-  });
-
-  // Trajet Gardharr
-  fetch('data/trajet_gardharr.geojson')
-  .then(res => res.json())
-  .then(data => {
-    const geoLayer = L.geoJSON(data, {
-      style: {
-        color: 'rgb(240, 109, 109)',
-        weight: 4,
-        dashArray: '12 8'
-      }
-    }).addTo(routeGardharrLayer);
-
-    // 🔽 Pour chaque feature (trajet), créer une polyline avec flèches
-    data.features.forEach(feature => {
-      const coords_gardharr = feature.geometry.coordinates.map(coord => [coord[1], coord[0]]);
-      const polyline_gardharr = L.polyline(coords_gardharr); // ne pas ajouter à la carte pour éviter les doublons
-      addDirectionalArrows(polyline_gardharr, 'rgb(240, 109, 109)', routeGardharrLayer, "Garðarr Svavarson", "voyage vers 860/861");
-    });
-  });
-  // Trajet Hjorleifr + Ingolfur
-  fetch('data/trajet_hjorleifr+ingolfur.geojson')
-  .then(res => res.json())
-  .then(data => {
-    const layer = L.geoJSON(data, {
-      style: {
-        color: 'rgb(238, 222, 79)',
-        weight: 4,
-        dashArray: '12 12'       
-      }
-    }).addTo(routeHjorleifrLayer);
-    data.features.forEach(feature => {
-      const coords_hjorleifr = feature.geometry.coordinates.map(coord => [coord[1], coord[0]]);
-      const polyline_hjorleifr = L.polyline(coords_hjorleifr); // ne pas ajouter à la carte pour éviter les doublons
-      addDirectionalArrows(polyline_hjorleifr, 'rgb(233, 233, 132)', routeHjorleifrLayer, "Hjorleifr", "Pour les dates, cf description");
-    });
-  });
-
-  // Trajet Hjorleifr
-  fetch('data/trajet_hjorleifr2.geojson')
-  .then(res => res.json())
-  .then(data => {
-    const layer = L.geoJSON(data, {
-      style: {
-        color: 'rgb(233, 233, 132)',
-        weight: 4,
-        dashArray: '12 8' 
-      }
-    }).addTo(routeHjorleifrLayer);
-    data.features.forEach(feature => {
-      const coords_hjorleifr = feature.geometry.coordinates.map(coord => [coord[1], coord[0]]);
-      const polyline_hjorleifr = L.polyline(coords_hjorleifr); // ne pas ajouter à la carte pour éviter les doublons
-      addDirectionalArrows(polyline_hjorleifr, 'rgb(233, 233, 132)', routeHjorleifrLayer, "Hjorleifr", "Pour les dates, cf description");
-    });
-  });
-  // Trajet Hjorleifr + Ingolfur
-  fetch('data/trajet_hjorleifr+ingolfur.geojson')
-  .then(res => res.json())
-  .then(data => {
-    const layer = L.geoJSON(data, {
-      style: {
-        color: 'orange',
-        weight: 4,
-        dashArray: '12 8'
-      }
-    }).addTo(routeIngolfurLayer);
-    data.features.forEach(feature => {
-      const coords_hjorleifringolfur = feature.geometry.coordinates.map(coord => [coord[1], coord[0]]);
-      const polyline_hjorleifringolfur = L.polyline(coords_hjorleifringolfur); // ne pas ajouter à la carte pour éviter les doublons
-      addDirectionalArrows(polyline_hjorleifringolfur, 'orange', routeIngolfurLayer, "Ingolfur Arnarson", "Pour les dates, cf description");
-    });
-  });  
-
-  // Trajet Ingolfur
-  fetch('data/trajet_ingolfur.geojson')
-  .then(res => res.json())
-  .then(data => {
-    const geoLayer = L.geoJSON(data, {
-      style: {
-        color: 'orange',
-        weight: 4,
-        dashArray: '12 8'
-      }
-    }).addTo(routeIngolfurLayer);
-
-    // 🔽 Pour chaque feature (trajet), créer une polyline avec flèches
-    data.features.forEach(feature => {
-      const coords_ingolfur = feature.geometry.coordinates.map(coord => [coord[1], coord[0]]);
-      const polyline_ingolfur = L.polyline(coords_ingolfur); // ne pas ajouter à la carte pour éviter les doublons
-      addDirectionalArrows(polyline_ingolfur, 'orange', routeIngolfurLayer, "Ingolfur Arnarson", "Pour les dates, cf description");
-    });
-  });
-
-    // Trajet Orlygur
-    fetch('data/trajet_orlygur.geojson')
-    .then(res => res.json())
-    .then(data => {
-      const geoLayer = L.geoJSON(data, {
-        style: {
-          color: 'pink',
-          weight: 4,
-          dashArray: '12 8'
-        }
-      }).addTo(routeOrlygurLayer);
-  
-      // 🔽 Pour chaque feature (trajet), créer une polyline avec flèches
-      data.features.forEach(feature => {
-        const coords_orlygur = feature.geometry.coordinates.map(coord => [coord[1], coord[0]]);
-        const polyline_orlygur = L.polyline(coords_orlygur); // ne pas ajouter à la carte pour éviter les doublons
-        addDirectionalArrows(polyline_orlygur, 'pink', routeOrlygurLayer, "Ørlyggr");
-      });
-    });
-
-    // Trajet Kollr
-    fetch('data/trajet_kollr.geojson')
-    .then(res => res.json())
-    .then(data => {
-      const geoLayer = L.geoJSON(data, {
-        style: {
-          color: 'purple',
-          weight: 4,
-          dashArray: '12 8'
-        }
-      }).addTo(routeKollrLayer);
-  
-      // 🔽 Pour chaque feature (trajet), créer une polyline avec flèches
-      data.features.forEach(feature => {
-        const coords_kollr = feature.geometry.coordinates.map(coord => [coord[1], coord[0]]);
-        const polyline_kollr = L.polyline(coords_kollr); // ne pas ajouter à la carte pour éviter les doublons
-        addDirectionalArrows(polyline_kollr, 'purple', routeKollrLayer, "Kollr");
-      });
-    });
-
-  // Trajet Ohthere
-  fetch('data/trajet_ohthere.geojson')
-  .then(res => res.json())
-  .then(data => {
-    const geoLayer = L.geoJSON(data, {
-      style: {
-        color: 'beige',
-        weight: 4,
-        dashArray: '12 8'
-      }
-    }).addTo(routeOhthereLayer);
-
-    // 🔽 Pour chaque feature (trajet), créer une polyline avec flèches
-    data.features.forEach(feature => {
-      const coords_ohthere = feature.geometry.coordinates.map(coord => [coord[1], coord[0]]);
-      const polyline_ohthere = L.polyline(coords_ohthere); // ne pas ajouter à la carte pour éviter les doublons
-      addDirectionalArrows(polyline_ohthere, 'beige', routeOhthereLayer, "Ohthere", "voyage vers 875");
-    });
-  });
-
-  // Trajet Wulfstan
-  fetch('data/trajet_wulfstan.geojson')
-  .then(res => res.json())
-  .then(data => {
-    const geoLayer = L.geoJSON(data, {
-      style: {
-        color: 'brown',
-        weight: 4,
-        dashArray: '12 8'
-      }
-    }).addTo(routeWulfstanLayer);
-
-    // 🔽 Pour chaque feature (trajet), créer une polyline avec flèches
-    data.features.forEach(feature => {
-      const coords_wulfstan = feature.geometry.coordinates.map(coord => [coord[1], coord[0]]);
-      const polyline_wulfstan = L.polyline(coords_wulfstan); // ne pas ajouter à la carte pour éviter les doublons
-      addDirectionalArrows(polyline_wulfstan, 'brown', routeWulfstanLayer, "Wulfstan", "voyage vers 875");
-    });
-  });
-
-  // Trajet Findan
-  fetch('data/trajet_findan.geojson')
-  .then(res => res.json())
-  .then(data => {
-    const geoLayer = L.geoJSON(data, {
-      style: {
-        color: 'rgb(107, 165, 240)',
-        weight: 4,
-        dashArray: '12 8'
-      }
-    }).addTo(routeFindanLayer);
-
-    // 🔽 Pour chaque feature (trajet), créer une polyline avec flèches
-    data.features.forEach(feature => {
-      const coords_findan = feature.geometry.coordinates.map(coord => [coord[1], coord[0]]);
-      const polyline_findan = L.polyline(coords_findan); // ne pas ajouter à la carte pour éviter les doublons
-      addDirectionalArrows(polyline_findan, 'rgb(107, 165, 240)', routeFindanLayer, "Findan", "voyage vers 850");
-    });
-  });
-
-  // Trajet Hrut
-  fetch('data/trajet_hrut.geojson')
-  .then(res => res.json())
-  .then(data => {
-    const geoLayer = L.geoJSON(data, {
-      style: {
-        color: 'black',
-        weight: 4,
-        dashArray: '12 8'
-      }
-    }).addTo(routeHrutLayer);
-
-    // 🔽 Pour chaque feature (trajet), créer une polyline avec flèches
-    data.features.forEach(feature => {
-      const coords_hrut = feature.geometry.coordinates.map(coord => [coord[1], coord[0]]);
-      const polyline_hrut = L.polyline(coords_hrut); // ne pas ajouter à la carte pour éviter les doublons
-      addDirectionalArrows(polyline_hrut, 'black', routeHrutLayer, "Hrut", "pour la date, cf description");
-    });
-  });
-  
-  // Trajet Gunnar
-  fetch('data/trajet_gunnar.geojson')
-  .then(res => res.json())
-  .then(data => {
-    const geoLayer = L.geoJSON(data, {
-      style: {
-        color: 'grey',
-        weight: 4,
-        dashArray: '12 8'
-      }
-    }).addTo(routeGunnarLayer);
-
-    // 🔽 Pour chaque feature (trajet), créer une polyline avec flèches
-    data.features.forEach(feature => {
-      const coords_gunnar = feature.geometry.coordinates.map(coord => [coord[1], coord[0]]);
-      const polyline_gunnar = L.polyline(coords_gunnar); // ne pas ajouter à la carte pour éviter les doublons
-      addDirectionalArrows(polyline_gunnar, 'grey', routeGunnarLayer, "Gunnar", "pour la date, cf description");
-    });
-  });
+  loadRoute('data/trajet_orlygur.geojson', routeOrlygurLayer, 'pink', "Ørlyggr");
+  loadRoute('data/trajet_kollr.geojson', routeKollrLayer, 'purple', "Kollr");
+  loadRoute('data/trajet_ohthere.geojson', routeOhthereLayer, 'beige', "Ohthere", "voyage vers 875");
+  loadRoute('data/trajet_wulfstan.geojson', routeWulfstanLayer, 'brown', "Wulfstan", "voyage vers 875");
+  loadRoute('data/trajet_findan.geojson', routeFindanLayer, 'rgb(107, 165, 240)', "Findan", "voyage vers 850");
+  loadRoute('data/trajet_hrut.geojson', routeHrutLayer, 'black', "Hrut", "pour la date, cf description");
+  loadRoute('data/trajet_gunnar.geojson', routeGunnarLayer, 'grey', "Gunnar", "pour la date, cf description");
 
   // Gestion 'Tout désélectionner'
   const checkboxIds = handlers.map(h=>h.id);
