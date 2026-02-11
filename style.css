@@ -130,6 +130,7 @@
   border-radius: 999px;
   outline: none;
   -webkit-appearance: none;
+  appearance: none;
   background: #d0d0d0;
 }
 
