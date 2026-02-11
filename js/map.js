@@ -658,6 +658,29 @@ if (resCheckbox) {
   });
 }
 
+  // --- Heatmap Sagas ---
+  // Vérifie si la librairie et les données sont chargées
+  if (typeof L.heatLayer === 'function' && typeof sagasHeatmapData !== 'undefined') {
+    // Calculer la valeur max pour l'intensité pour éviter la saturation
+    const maxIntensity = sagasHeatmapData.reduce((max, p) => Math.max(max, p[2]), 0);
+    
+    const heatmapLayer = L.heatLayer(sagasHeatmapData, {
+      minOpacity: 0.5,
+      maxZoom: 5,
+      radius: 10,
+      blur: 10,
+      max: maxIntensity // Important pour gérer les grandes valeurs d'intensité
+    });
+
+    const toggleHeatmap = document.getElementById('toggleHeatmap');
+    if (toggleHeatmap) {
+      toggleHeatmap.addEventListener('change', e => {
+        if (e.target.checked) map.addLayer(heatmapLayer);
+        else map.removeLayer(heatmapLayer);
+      });
+    }
+  }
+
   // --- Chargement des trajets (GeoJSON) ---
   loadRoute('data/trajet_floki.geojson', routeFlokiLayer, 'green', "Flóki", "voyage vers 865");
   loadRoute('data/trajet_naddodr.geojson', routeNaddodrLayer, 'rgb(65, 65, 156)', "Naddodr", "voyage vers 850");

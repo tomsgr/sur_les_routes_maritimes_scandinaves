@@ -22,6 +22,8 @@
     <div id="legend-container">
       <label><input type="checkbox" id="toggleRouteEnsemble">
         Ensemble des lieux cités <br> dans les sources islandaises</label><br>
+      <label><input type="checkbox" id="toggleHeatmap">
+        Carte de chaleur</label><br>
       <label><input type="checkbox" id="toggleRouteCommerce">
         Ensemble des lieux de <br> commerce scandinaves importants</label><br>
       <label><input type="checkbox" id="toggleRessources"> Ensemble des ressources par pays</label><br>
@@ -72,6 +74,8 @@
     </div>
 
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet.heat/dist/leaflet-heat.js"></script>
+    <script src="data/heatmap_data.js"></script>
     <script src="js/leaflet.polylineDecorator.js"></script>
     <script src="js/map.js"></script>
     <script>
