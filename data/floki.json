@@ -39,12 +39,5 @@
     "lieu": "Vatnsfjörður",
     "date": "866-01-01",
     "type": "fjord"
-  },
-  {
-    "lat": 60.8877000420779,
-    "lon": 8.701171875,
-    "lieu": "Norway",
-    "date": "866-01-01",
-    "type": "country"
   }
 ]

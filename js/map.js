@@ -18,19 +18,26 @@ document.addEventListener('DOMContentLoaded', () => {
   
   const placeMarkers = {}; // nom du lieu -> marker
   const allBounds = [];
+  const travelerPoints = {}; // Stocke les points pour le replay
+  let currentReplayTimeout = null;
 
   // --- Fonctions Helper pour charger les données ---
 
   // Charge les points (marqueurs) depuis un fichier JSON
-  function loadPoints(url, layer) {
+  function loadPoints(url, layer, name = null) {
     fetch(url)
       .then(res => res.json())
       .then(data => {
+        const points = [];
         data.forEach(p => {
           const marker = L.marker([p.lat, p.lon]).addTo(layer);
           const type = p.type || p.Type || ''; // Gère les différences de casse dans les JSON
           marker.bindPopup(`<strong>${p.lieu}</strong><br>Type : ${type}`);
+          points.push({ ...p, marker: marker });
         });
+        if (name) {
+          travelerPoints[name] = points;
+        }
       });
   }
 
@@ -182,32 +189,84 @@ function updateTravelerPanel(name, visible) {
   updateTravelerDescriptions();
 }
 
+function replayJourney(name) {
+  const points = travelerPoints[name];
+  if (!points || points.length === 0) {
+    alert("Trajet non disponible pour le replay.");
+    return;
+  }
+
+  // Annule tout replay en cours
+  if (currentReplayTimeout) {
+    clearTimeout(currentReplayTimeout);
+    currentReplayTimeout = null;
+  }
+  map.closePopup();
+
+  let index = 0;
+
+  function step() {
+    if (index >= points.length) return;
+
+    const p = points[index];
+    const latLng = [p.lat, p.lon];
+    
+    // Animation vers le point
+    map.flyTo(latLng, 8, {
+      duration: 2 // Durée du vol en secondes
+    });
+
+    map.once('moveend', () => {
+      // Ouvre la popup si le marqueur est visible
+      if (p.marker) p.marker.openPopup();
+
+      currentReplayTimeout = setTimeout(() => {
+        if (p.marker) p.marker.closePopup();
+        index++;
+        step();
+      }, 3000); // Pause de 3 secondes
+    });
+  }
+  
+  step();
+}
+
 function updateTravelerDescriptions() {
   const list = document.getElementById('traveler-list');
   const descEl = document.getElementById('traveler-description');
   if (!list || !descEl) return;
 
-  let content = '';
+  descEl.innerHTML = ''; // Vide le conteneur
 
   list.querySelectorAll('li').forEach(li => {
     const name = li.dataset.name;
     const desc = travelerDescriptions[name] || 'Description non disponible.';
     const color = travelerColors[name] || '#007bff';
 
-    content += `
-      <div style="
-        border-left: 4px solid ${color}; 
-        padding-left: 8px; 
-        margin-bottom: 12px;
-      ">
-        <strong>${name}</strong><br>${desc}
-      </div>
-    `;
+    const container = document.createElement('div');
+    container.style.cssText = `border-left: 4px solid ${color}; padding-left: 8px; margin-bottom: 12px;`;
 
+    const header = document.createElement('div');
+    header.style.cssText = "display:flex; justify-content:space-between; align-items:center; margin-bottom:5px;";
+
+    const title = document.createElement('strong');
+    title.textContent = name;
+    
+    const btn = document.createElement('button');
+    btn.textContent = "▶ Rejouer le voyage";
+    btn.style.cssText = "font-size:11px; cursor:pointer; padding:2px 5px; border:1px solid #ccc; background:#fff; border-radius:3px;";
+    btn.onclick = () => replayJourney(name);
+
+    header.appendChild(title);
+    header.appendChild(btn);
+    container.appendChild(header);
+
+    const body = document.createElement('div');
+    body.innerHTML = desc;
+    container.appendChild(body);
+
+    descEl.appendChild(container);
   });
-
-  descEl.innerHTML = content.trim();
- 
 }
 // Descriptions des voyageurs
 const travelerDescriptions = {
@@ -382,18 +441,18 @@ function applyTimelineFilter() {
   applyTimelineFilter();
   
   // --- Chargement des points (JSON) ---
-  loadPoints('data/floki.json', routeFlokiLayer);
-  loadPoints('data/naddodr.json', routeNaddodrLayer);
-  loadPoints('data/gardharr.json', routeGardharrLayer);
-  loadPoints('data/hjorleifr.json', routeHjorleifrLayer);
-  loadPoints('data/ingolfur.json', routeIngolfurLayer);
-  loadPoints('data/orlygur.json', routeOrlygurLayer);
-  loadPoints('data/kollr.json', routeKollrLayer);
-  loadPoints('data/ohthere.json', routeOhthereLayer);
-  loadPoints('data/wulfstan.json', routeWulfstanLayer);
-  loadPoints('data/hrut.json', routeHrutLayer);
-  loadPoints('data/gunnar.json', routeGunnarLayer);
-  loadPoints('data/findan.json', routeFindanLayer);
+  loadPoints('data/floki.json', routeFlokiLayer, 'Flóki');
+  loadPoints('data/naddodr.json', routeNaddodrLayer, 'Naddodr');
+  loadPoints('data/gardharr.json', routeGardharrLayer, 'Garðarr Svavarson');
+  loadPoints('data/hjorleifr.json', routeHjorleifrLayer, 'Hjorleifr');
+  loadPoints('data/ingolfur.json', routeIngolfurLayer, 'Ingólfur Arnarson');
+  loadPoints('data/orlygur.json', routeOrlygurLayer, 'Ørlyggr');
+  loadPoints('data/kollr.json', routeKollrLayer, 'Kollr');
+  loadPoints('data/ohthere.json', routeOhthereLayer, 'Óttarr (Ohthere)');
+  loadPoints('data/wulfstan.json', routeWulfstanLayer, 'Wulfstan');
+  loadPoints('data/hrut.json', routeHrutLayer, 'Hrut Herjólfsson');
+  loadPoints('data/gunnar.json', routeGunnarLayer, 'Gunnar Hamundarson');
+  loadPoints('data/findan.json', routeFindanLayer, 'Findan de Rheinau');
 
   // Chargement des points de ensemble
   fetch('data/lieux.json')

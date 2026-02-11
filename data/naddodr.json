@@ -1,11 +1,5 @@
 [
   {
-    "lieu": "Norway",
-    "lat": 60.8877000420779,
-    "lon": 8.701171875,
-    "type": "country"
-  },
-  {
     "lat": 59.527727,
     "lon": 5.224923,
     "lieu": "Flókavarði",
@@ -13,15 +7,16 @@
     "type": "other"
   },
   {
-    "lieu": "Færeyjar",
-    "lat": 62.007451,
-    "lon": -6.778993,
-    "type": "island"
-  },
-  {
     "lieu": "Reyðarfjörður",
     "lat": 65.0211460214622,
     "lon": -13.974609375,
     "type": "fjord"
+  },
+  {
+    "lieu": "Færeyjar",
+    "lat": 62.007451,
+    "lon": -6.778993,
+    "type": "island"
   }
+
 ]
