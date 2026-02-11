@@ -148,7 +148,7 @@
 
 #search-container {
   position: fixed;
-  bottom: 20px;
+  bottom: 40px;
   left: 20px;
   z-index: 2001;
   background: white;

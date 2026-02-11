@@ -148,6 +148,31 @@ function updateTravelerPanel(name, visible) {
     item = document.createElement('li');
     item.innerHTML = `<span style="display:inline-block;width:10px;height:10px;background:${travelerColors[name]};border-radius:50%;margin-right:6px;"></span>${name}`;
     item.dataset.name = name;
+
+    // Rendre le nom cliquable pour zoomer et mettre en évidence dans la légende
+    item.style.cursor = 'pointer';
+    item.title = "Cliquer pour zoomer sur le trajet";
+    item.addEventListener('click', () => {
+      const handler = handlers.find(h => h.name === name);
+      if (handler && handler.layer) {
+        if (typeof handler.layer.getBounds === 'function' && handler.layer.getLayers().length > 0) {
+          map.fitBounds(handler.layer.getBounds());
+        }
+        const cb = document.getElementById(handler.id);
+        if (cb) {
+          const legend = document.getElementById('legend-container');
+          if (legend && legend.style.display === 'none') legend.style.display = 'block';
+          cb.scrollIntoView({ behavior: "smooth", block: "center" });
+          if (cb.parentElement) {
+            const originalBg = cb.parentElement.style.backgroundColor;
+            cb.parentElement.style.transition = "background-color 0.3s";
+            cb.parentElement.style.backgroundColor = "rgba(255, 255, 0, 0.3)";
+            setTimeout(() => { cb.parentElement.style.backgroundColor = originalBg; }, 1000);
+          }
+        }
+      }
+    });
+
     list.appendChild(item);
   } else if (!visible && item) {
     list.removeChild(item);
@@ -210,18 +235,18 @@ function openPanel() {
 }
 
   // Groupes pour trajets uniquement
-  const routeFlokiLayer = L.layerGroup();
-  const routeNaddodrLayer = L.layerGroup().addTo(map);
-  const routeGardharrLayer = L.layerGroup();
-  const routeHjorleifrLayer = L.layerGroup();
-  const routeIngolfurLayer = L.layerGroup();
-  const routeOrlygurLayer = L.layerGroup();
-  const routeKollrLayer = L.layerGroup();
-  const routeOhthereLayer = L.layerGroup();
-  const routeWulfstanLayer = L.layerGroup(); 
-  const routeFindanLayer = L.layerGroup(); 
-  const routeHrutLayer = L.layerGroup();
-  const routeGunnarLayer = L.layerGroup();
+  const routeFlokiLayer = L.featureGroup();
+  const routeNaddodrLayer = L.featureGroup().addTo(map);
+  const routeGardharrLayer = L.featureGroup();
+  const routeHjorleifrLayer = L.featureGroup();
+  const routeIngolfurLayer = L.featureGroup();
+  const routeOrlygurLayer = L.featureGroup();
+  const routeKollrLayer = L.featureGroup();
+  const routeOhthereLayer = L.featureGroup();
+  const routeWulfstanLayer = L.featureGroup(); 
+  const routeFindanLayer = L.featureGroup(); 
+  const routeHrutLayer = L.featureGroup();
+  const routeGunnarLayer = L.featureGroup();
   const ensembleLayer = L.layerGroup();
   const commerceLayer = L.layerGroup();
 
@@ -330,14 +355,31 @@ function applyTimelineFilter() {
       if (on) openPanel();
     });
   });
+  // Initialisation de la timeline sur toute la plage
+  if (tlMin && tlMax) {
+    tlMin.value = tlMin.min;
+    tlMax.value = tlMax.max;
+    updateTimelineUI();
+  }
+
+  // Initialisation : seul Naddodr sélectionné
   handlers.forEach(h => {
     const cb = document.getElementById(h.id);
-    if (cb && cb.checked) {
-      // Déclenche manuellement l'événement change
-      cb.dispatchEvent(new Event('change'));
-      applyTimelineFilter();
+    if (cb) {
+      const isNaddodr = h.name === 'Naddodr';
+      cb.checked = isNaddodr;
+      
+      if (isNaddodr) {
+        if (!map.hasLayer(h.layer)) map.addLayer(h.layer);
+        updateTravelerPanel(h.name, true);
+        openPanel();
+      } else {
+        if (map.hasLayer(h.layer)) map.removeLayer(h.layer);
+        updateTravelerPanel(h.name, false);
+      }
     }
   });
+  applyTimelineFilter();
   
   // --- Chargement des points (JSON) ---
   loadPoints('data/floki.json', routeFlokiLayer);
