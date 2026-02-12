@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Ajout de l'échelle (en km uniquement)
   L.control.scale({ imperial: false }).addTo(map);
 
-  //transforme les lettres avec accent en version simple
+  // Normalisation du texte
   function normalizeText(str) {
     return str.normalize("NFD").replace(/[\u0300-\u036f]/g, "").toLowerCase().trim();
   }
@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const points = [];
         data.forEach(p => {
           const marker = L.marker([p.lat, p.lon]).addTo(layer);
-          const type = p.type || p.Type || ''; // Gère les différences de casse dans les JSON
+          const type = p.type || p.Type || ''; // Gestion de la casse des propriétés JSON
           marker.bindPopup(`<strong>${p.lieu}</strong><br>Type : ${type}`);
           points.push({ ...p, marker: marker });
         });
@@ -51,10 +51,10 @@ document.addEventListener('DOMContentLoaded', () => {
         }).addTo(layer);
 
         data.features.forEach(feature => {
-          // GeoJSON est Lon, Lat. Leaflet veut Lat, Lon.
+          // Conversion des coordonnées GeoJSON (Lon, Lat) vers Leaflet (Lat, Lon)
           const coords = feature.geometry.coordinates.map(coord => [coord[1], coord[0]]);
           const polyline = L.polyline(coords);
-          // On n'ajoute pas la polyline à la carte, juste les flèches via le decorator
+          // Ajout des flèches via le decorator
           addDirectionalArrows(polyline, arrowColor || color, layer, name, note);
         });
       });
@@ -97,7 +97,7 @@ function addDirectionalArrows(lineLayer, color, targetGroup, popupText, note) {
   // Rendre toute la ligne visible et cliquable avec le popup
   const visibleLine = L.polyline(lineLayer.getLatLngs(), {
     weight: 7,
-    opacity: 0 // laisser la geoJSON visible mais pas cette couche
+    opacity: 0 // Ligne invisible pour l'interaction (la couche GeoJSON gère l'affichage)
   }).addTo(targetGroup);
   visibleLine.bindPopup(`<strong>${popupText}</strong> <br>${note}`);
 
@@ -327,11 +327,10 @@ function openPanel() {
   ];
 
 
-// --- Gestion des Empires et Royaumes ---
-// --- Gestion de la carte politique (Basée sur les noms français) ---
+// --- Gestion de la carte politique ---
 const empireLayer = L.layerGroup().addTo(map);
 
-// Couleurs associées aux noms exacts de ton fichier europe_800.geojson
+// Couleurs associées aux entités politiques
 const empireColors = {
   // --- Monde Nordique & Viking ---
   "Danois": "#e74c3c",              // Rouge
@@ -356,7 +355,7 @@ const empireColors = {
 
   // --- Empires Majeurs ---
   "Empire carolingien": "#8e44ad",  // Violet (Francs)
-  "Empire byzantin": "#9b59b6",     // Violet clair
+  "Empire byzantin": "#ff00dd",     // Violet clair
   "Califat Abbasside": "#27ae60",   // Vert
   "Emirat de Cordoue": "#1abc9c",   // Turquoise
   "Asturies": "#f39c12",            // Jaune orangé
@@ -368,7 +367,7 @@ const empireColors = {
   // --- Autres ---
   "Bretagne": "#e67e22",            // Orange (Bretons)
   "Tribus slaves": "#95a5a6",       // Gris
-  "Tribus baltiques": "#95a5a6",    // Gris
+  "Tribus baltes": "#95a5a6",    // Gris
   "Magyars": "#7f8c8d",             // Gris
   "default": "#bdc3c7"              // Gris très clair par défaut
 };
@@ -376,8 +375,7 @@ const empireColors = {
 // Configuration des cartes politiques par année
 const politicalSnapshots = [
   { year: 800, url: 'data/europe_800.geojson', data: null },
-  // Vous pourrez ajouter d'autres années ici, par exemple :
-  // { year: 880, url: 'data/europe_880.geojson', data: null },
+  { year: 900, url: 'data/europe_900.geojson', data: null },
 ];
 
 let currentPoliticalYear = null;
@@ -438,7 +436,7 @@ const tlMax = document.getElementById('tlMax');
 const tlMinLabel = document.getElementById('tlMinLabel');
 const tlMaxLabel = document.getElementById('tlMaxLabel');
 
-// périodes par couche (à ajuster)
+// Périodes d'activité
 const routePeriods = {
   toggleRouteFloki:       [865, 866],
   toggleRouteNaddodr:     [850, 851],
@@ -458,7 +456,7 @@ function overlaps(a0, a1, b0, b1) {
   return a0 <= b1 && a1 >= b0;
 }
 
-// met à jour les labels + colorie la “plage” sur chaque slider
+// Mise à jour de l'interface de la timeline
 function updateTimelineUI() {
   const lo = Math.min(+tlMin.value, +tlMax.value);
   const hi = Math.max(+tlMin.value, +tlMax.value);
@@ -503,7 +501,7 @@ function applyTimelineFilter() {
   });
 }
 
-// écoute en direct
+// Écouteurs d'événements
 ['input','change'].forEach(evt => {
   tlMin?.addEventListener(evt, applyTimelineFilter);
   tlMax?.addEventListener(evt, applyTimelineFilter);
@@ -564,7 +562,7 @@ function applyTimelineFilter() {
   loadPoints('data/gunnar.json', routeGunnarLayer, 'Gunnar Hamundarson');
   loadPoints('data/findan.json', routeFindanLayer, 'Findan de Rheinau');
 
-  // Chargement des points de ensemble
+  // Chargement des lieux
   fetch('data/lieux.json')
     .then(res => res.json())
     .then(data => {
@@ -579,7 +577,7 @@ function applyTimelineFilter() {
           fillOpacity: 0.8
         }).addTo(ensembleLayer);
         
-        // Correction: utilisation de p.Notes si p.description est vide (basé sur votre JSON)
+        // Gestion de la description ou des notes
         const note = p.description || p.Notes || "";
         marker.bindPopup(`<strong>${p.Nom_lieu}</strong><br>Type : ${p.Type}<br>Note : ${note}`);
       
@@ -591,7 +589,7 @@ function applyTimelineFilter() {
       });
     });
 
-  // Toggle via la case de la légende (id="toggleRessources")
+  // Gestion de l'affichage des lieux
   const resCheckbox2 = document.getElementById("toggleRouteEnsemble");
   if (resCheckbox2) {
     resCheckbox2.addEventListener("change", (e) => {
@@ -602,7 +600,7 @@ function applyTimelineFilter() {
       }
     });
   }
-  // icone points de commerce
+  // Icône des points de commerce
   const commerceIcon = L.icon({
     iconUrl: 'assets/commerce.png',
     iconSize: [28, 28],
@@ -620,7 +618,7 @@ function applyTimelineFilter() {
       });
     });
 
-  // Toggle via la case de la légende (id="toggleRessources")
+  // Gestion de l'affichage du commerce
   const resCheckbox1 = document.getElementById("toggleRouteCommerce");
   if (resCheckbox1) {
     resCheckbox1.addEventListener("change", (e) => {
@@ -632,7 +630,7 @@ function applyTimelineFilter() {
     });
   }
 
-  // icone ressources
+  // Icônes des ressources
 const resourceIcons = {
   "Ambre": "🧿",
   "Laine": "🧶",
@@ -711,7 +709,7 @@ function makeResourceHTML(list) {
         <div style="text-align:center;">${resourceIcons[list[3]] || "•"}</div>
       </div>`;
   }
-  // pour plus de 4, on met en colonne par défaut
+  // Affichage en colonne pour plus de 4 ressources
   return `<div class="res-icons">${list.map(r => resourceIcons[r] || "•").join("<br>")}</div>`;
 }
 
@@ -731,7 +729,7 @@ function makeResourceMarker(entry) {
 // Préparer la couche (non affichée par défaut)
 resourcesData.forEach(e => resourcesLayer.addLayer(makeResourceMarker(e)));
 
-// Toggle via la case de la légende (id="toggleRessources")
+// Gestion de l'affichage des ressources
 const resCheckbox = document.getElementById("toggleRessources");
 if (resCheckbox) {
   resCheckbox.addEventListener("change", (e) => {
@@ -753,7 +751,7 @@ const resourceLegendHTML = `
   🧿 Ambre &nbsp; 🧪 Soufre &nbsp; 🍯 Miel &nbsp; 🐄 Bétail &nbsp; 🌾 Grain
 `;
 
-// Ajuste le toggle pour afficher/masquer la mini-légende
+// Affichage conditionnel de la légende des ressources
 if (resCheckbox) {
   resCheckbox.addEventListener("change", (e) => {
     if (e.target.checked) {
@@ -834,7 +832,7 @@ if (resCheckbox) {
     });
   }
 
-  //barre de recherche
+  // Barre de recherche
   const searchContainer = document.createElement('div');
   searchContainer.id = 'search-container';
   searchContainer.innerHTML = `
