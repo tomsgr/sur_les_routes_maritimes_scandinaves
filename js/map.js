@@ -326,6 +326,112 @@ function openPanel() {
     {id: 'toggleRouteGunnar', layer: routeGunnarLayer, name: 'Gunnar Hamundarson'},
   ];
 
+
+// --- Gestion des Empires et Royaumes ---
+// --- Gestion de la carte politique (Basée sur les noms français) ---
+const empireLayer = L.layerGroup().addTo(map);
+
+// Couleurs associées aux noms exacts de ton fichier europe_800.geojson
+const empireColors = {
+  // --- Monde Nordique & Viking ---
+  "Danois": "#e74c3c",              // Rouge
+  "Norvégiens": "#3498db",          // Bleu
+  "Suedois et Goths": "#f1c40f",    // Jaune
+  "Rus'": "#2ecc71",                // Vert Émeraude (Russie)
+  "Normands": "#e74c3c",            // Rouge (si présent)
+  "Finns": "#95a5a6",               // Gris (Finlande)
+  "Sámi": "#bdc3c7",                // Gris clair (Laponie)
+
+  // --- Iles Britanniques ---
+  "Wessex": "#d35400",              // Orange foncé
+  "Mercie": "#e67e22",              // Orange
+  "Northumbrie": "#c0392b",         // Rouge brique
+  "Essex": "#d35400",               // Orange foncé
+  "Kent": "#d35400",                // Orange foncé
+  "Irlande": "#27ae60",             // Vert pré
+  "Ecossais": "#16a085",            // Vert bleuté
+  "Pictes": "#1abc9c",              // Turquoise
+  "Pays de Galles": "#27ae60",      // Vert
+  "Celtes": "#27ae60",              // Vert
+
+  // --- Empires Majeurs ---
+  "Empire carolingien": "#8e44ad",  // Violet (Francs)
+  "Empire byzantin": "#9b59b6",     // Violet clair
+  "Califat Abbasside": "#27ae60",   // Vert
+  "Emirat de Cordoue": "#1abc9c",   // Turquoise
+  "Asturies": "#f39c12",            // Jaune orangé
+  "Etats pontificaux": "#f1c40f",   // Jaune Pape
+  "Bulgars": "#16a085",             // Vert sombre
+  "Avars": "#7f8c8d",               // Gris foncé
+  "Khazars": "#95a5a6",             // Gris
+
+  // --- Autres ---
+  "Bretagne": "#e67e22",            // Orange (Bretons)
+  "Tribus slaves": "#95a5a6",       // Gris
+  "Tribus baltiques": "#95a5a6",    // Gris
+  "Magyars": "#7f8c8d",             // Gris
+  "default": "#bdc3c7"              // Gris très clair par défaut
+};
+
+// Configuration des cartes politiques par année
+const politicalSnapshots = [
+  { year: 800, url: 'data/europe_800.geojson', data: null },
+  // Vous pourrez ajouter d'autres années ici, par exemple :
+  // { year: 880, url: 'data/europe_880.geojson', data: null },
+];
+
+let currentPoliticalYear = null;
+
+function updatePoliticalLayer(year) {
+  if (politicalSnapshots.length === 0) return;
+
+  // Trouve le snapshot le plus proche de l'année demandée
+  const snapshot = politicalSnapshots.reduce((prev, curr) => {
+    return (Math.abs(curr.year - year) < Math.abs(prev.year - year) ? curr : prev);
+  });
+
+  // Si c'est déjà l'année chargée, on ne fait rien pour éviter de clignoter
+  if (currentPoliticalYear === snapshot.year) return;
+
+  const renderData = (data) => {
+    empireLayer.clearLayers();
+    L.geoJSON(data, {
+      style: function(feature) {
+        const name = feature.properties.NAME; 
+        const color = empireColors[name] || empireColors["default"];
+        return {
+          color: "white",
+          weight: 1,
+          fillColor: color,     
+          fillOpacity: 0.25
+        };
+      },
+      onEachFeature: function(feature, layer) {
+        if (feature.properties && feature.properties.NAME) {
+          layer.bindTooltip(feature.properties.NAME, {
+            permanent: false, 
+            direction: "center",
+            className: "empire-label"
+          });
+        }
+      }
+    }).addTo(empireLayer);
+    currentPoliticalYear = snapshot.year;
+  };
+
+  if (snapshot.data) {
+    renderData(snapshot.data);
+  } else {
+    fetch(snapshot.url)
+      .then(res => res.json())
+      .then(data => {
+        snapshot.data = data; // Mise en cache
+        renderData(data);
+      })
+      .catch(err => console.error(`Erreur chargement ${snapshot.url} :`, err));
+  }
+}
+
   /************ Timeline (double range) ************/
 const tlMin = document.getElementById('tlMin');
 const tlMax = document.getElementById('tlMax');
@@ -383,6 +489,10 @@ function applyTimelineFilter() {
   updateTimelineUI();
   const lo = Math.min(+tlMin.value, +tlMax.value);
   const hi = Math.max(+tlMin.value, +tlMax.value);
+
+  // Mise à jour de la carte politique selon l'année moyenne de la sélection
+  const avgYear = Math.floor((lo + hi) / 2);
+  updatePoliticalLayer(avgYear);
 
   handlers.forEach(h => {
     const cb = document.getElementById(h.id);

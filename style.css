@@ -185,3 +185,13 @@
 .suggestions-list li:hover {
   background-color: #f0f0f0;
 }
+.empire-label {
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    font-family: 'Cinzel', serif; /* Ou une police Serif standard */
+    font-size: 14px;
+    font-weight: bold;
+    color: #555;
+    text-shadow: 1px 1px 0 #fff;
+}
