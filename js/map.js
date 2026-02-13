@@ -348,10 +348,10 @@ const empireColors = {
   "Essex": "#d35400",               // Orange foncé
   "Kent": "#d35400",                // Orange foncé
   "Irlande": "#27ae60",             // Vert pré
-  "Ecossais": "#16a085",            // Vert bleuté
-  "Pictes": "#1abc9c",              // Turquoise
-  "Pays de Galles": "#27ae60",      // Vert
-  "Celtes": "#27ae60",              // Vert
+  "Ecossais": "#001aff",            // Vert bleuté
+  "Pictes": "#ff0000",              // Turquoise
+  "Pays de Galles": "#00b7ff",      // Vert
+  "Celtes": "#ff00bf",              // Vert
 
   // --- Empires Majeurs ---
   "Empire carolingien": "#8e44ad",  // Violet (Francs)
@@ -362,14 +362,20 @@ const empireColors = {
   "Etats pontificaux": "#f1c40f",   // Jaune Pape
   "Bulgars": "#16a085",             // Vert sombre
   "Avars": "#7f8c8d",               // Gris foncé
-  "Khazars": "#95a5a6",             // Gris
+  "Khazars": "#95a5a6",
+  "Francie Occidentale": "#001aff",
+  "Francie orientale" : "#00b7ff",
+  "Lotharingie": "#f39c12",
 
   // --- Autres ---
   "Bretagne": "#e67e22",            // Orange (Bretons)
-  "Tribus slaves": "#95a5a6",       // Gris
+  "Tribus slaves": "#256266",       // Gris
   "Tribus baltes": "#95a5a6",    // Gris
   "Magyars": "#7f8c8d",             // Gris
-  "default": "#bdc3c7"              // Gris très clair par défaut
+  "default": "#bdc3c7",
+  "Lombards": "#000000",
+  "Royaume de Croatie" : "#ff0000",
+             
 };
 
 // Configuration des cartes politiques par année
@@ -430,11 +436,9 @@ function updatePoliticalLayer(year) {
   }
 }
 
-  /************ Timeline (double range) ************/
-const tlMin = document.getElementById('tlMin');
-const tlMax = document.getElementById('tlMax');
-const tlMinLabel = document.getElementById('tlMinLabel');
-const tlMaxLabel = document.getElementById('tlMaxLabel');
+  /************ Timeline (single range) ************/
+  const timelineInput = document.getElementById('timelineInput');
+  const tlLabel = document.getElementById('tlLabel');
 
 // Périodes d'activité
 const routePeriods = {
@@ -452,60 +456,65 @@ const routePeriods = {
   toggleRouteGunnar:      [970, 980]
 };
 
-function overlaps(a0, a1, b0, b1) {
-  return a0 <= b1 && a1 >= b0;
-}
-
 // Mise à jour de l'interface de la timeline
 function updateTimelineUI() {
-  const lo = Math.min(+tlMin.value, +tlMax.value);
-  const hi = Math.max(+tlMin.value, +tlMax.value);
-  tlMinLabel.textContent = lo;
-  tlMaxLabel.textContent = hi;
+  if (!timelineInput) return;
+  const val = +timelineInput.value;
+  if (tlLabel) tlLabel.textContent = val;
 
-  // Remplissage visuel (gradient) sur chaque input
-  const rngMin = +tlMin.min, rngMax = +tlMin.max;
-  const pctLo = ((lo - rngMin) / (rngMax - rngMin)) * 100;
-  const pctHi = ((hi - rngMin) / (rngMax - rngMin)) * 100;
+  // Remplissage visuel (gradient)
+  const min = +timelineInput.min || 800;
+  const max = +timelineInput.max || 1000;
+  const percentage = ((val - min) / (max - min)) * 100;
 
-  const track = (el, start, end) => {
-    el.style.background = `linear-gradient(
-      to right,
-      #d0d0d0 0%,
-      #d0d0d0 ${start}%,
-      #7aa6ff ${start}%,
-      #7aa6ff ${end}%,
-      #d0d0d0 ${end}%,
-      #d0d0d0 100%
-    )`;
-  };
-  if (tlMin) track(tlMin, pctLo, pctHi);
-  if (tlMax) track(tlMax, pctLo, pctHi);
+  timelineInput.style.background = `linear-gradient(
+    to right,
+    #7aa6ff 0%,
+    #7aa6ff ${percentage}%,
+    #d0d0d0 ${percentage}%,
+    #d0d0d0 100%
+  )`;
 }
 
 function applyTimelineFilter() {
   updateTimelineUI();
-  const lo = Math.min(+tlMin.value, +tlMax.value);
-  const hi = Math.max(+tlMin.value, +tlMax.value);
+  if (!timelineInput) return;
+  const currentYear = +timelineInput.value;
 
-  // Mise à jour de la carte politique selon l'année moyenne de la sélection
-  const avgYear = Math.floor((lo + hi) / 2);
-  updatePoliticalLayer(avgYear);
+  // Mise à jour de la carte politique
+  // On cherche le snapshot dont l'année est <= currentYear
+  const sortedSnapshots = politicalSnapshots.sort((a, b) => a.year - b.year);
+  let targetYear = sortedSnapshots[0].year;
+  for (const snap of sortedSnapshots) {
+    if (currentYear >= snap.year) {
+      targetYear = snap.year;
+    }
+  }
+  updatePoliticalLayer(targetYear);
 
   handlers.forEach(h => {
     const cb = document.getElementById(h.id);
     if (!cb) return;
-    const [a, b] = routePeriods[h.id] || [800, 1000];
-    const show = cb.checked && overlaps(a, b, lo, hi);
-    if (show) map.addLayer(h.layer); else map.removeLayer(h.layer);
+    const period = routePeriods[h.id];
+    const startYear = period ? period[0] : 800;
+    
+    // Affiché si coché ET l'année courante >= année de début
+    const show = cb.checked && (currentYear >= startYear);
+    
+    if (show) {
+      if (!map.hasLayer(h.layer)) map.addLayer(h.layer);
+    } else {
+      if (map.hasLayer(h.layer)) map.removeLayer(h.layer);
+    }
   });
 }
 
 // Écouteurs d'événements
-['input','change'].forEach(evt => {
-  tlMin?.addEventListener(evt, applyTimelineFilter);
-  tlMax?.addEventListener(evt, applyTimelineFilter);
-});
+if (timelineInput) {
+  ['input', 'change'].forEach(evt => {
+    timelineInput.addEventListener(evt, applyTimelineFilter);
+  });
+}
 
   handlers.forEach(h => {
     const cb = document.getElementById(h.id);
@@ -522,10 +531,9 @@ function applyTimelineFilter() {
       if (on) openPanel();
     });
   });
-  // Initialisation de la timeline sur toute la plage
-  if (tlMin && tlMax) {
-    tlMin.value = tlMin.min;
-    tlMax.value = tlMax.max;
+  // Initialisation de la timeline
+  if (timelineInput) {
+    timelineInput.value = timelineInput.min;
     updateTimelineUI();
   }
 
